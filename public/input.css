@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Slackey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&family=Black+Han+Sans&family=Slackey&display=swap');
+
+@theme {
+    --font-slackey: 'Slackey', cursive;
+    --font-black-han-sans: 'Black Han Sans', sans-serif;
+    --font-athiti: 'Athiti', sans-serif;
+}

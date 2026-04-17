@@ -19,13 +19,13 @@
             </a>
             <div class="space-x-4 font-normal">
                 <a href="#" class="text-white hover:text-gray-300">About</a>
-                <a href="#" class="text-white hover:text-gray-300">Feedback</a>
-                <a href="#" class="text-white hover:text-gray-300">Home</a>
+                <a href="<?= base_url('/feedback') ?>" class="text-white hover:text-gray-300">Feedback</a>
+                <a href="<?= base_url('/') ?>" class="text-white hover:text-gray-300">Home</a>
                 <a href="#" class="text-white hover:text-gray-300">Gallery</a>
                 <a href="#" class="text-white hover:text-gray-300">Patches</a>
             </div>
             <div class="font-normal">
-                <a class="my-2 text-black bg-white py-3 px-6 rounded-full hover:bg-gray-200 hover:text-black transition duration-200" href="#">
+                <a class="my-2 text-black bg-white py-2 px-6 rounded-full hover:bg-gray-200 hover:text-black transition duration-200" href="#">
                     Download
                 </a>
             </div>

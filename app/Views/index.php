@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Slackey&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&family=Black+Han+Sans&family=Slackey&display=swap" rel="stylesheet">
-    <title>System Override</title>
+    <title>System Override | Home</title>
 </head>
 
 <body class="relative min-h-screen">
@@ -20,11 +20,13 @@
         style="background-image: url('<?= base_url('images/backgrounds/m-background.png') ?>');">
     </div>
 
-    <!-- Content Layer -->
+    <!-- Navbar -->
+    <?= $this->include('partials/navbar') ?>
 
-    <div class="relative z-10 font-athiti text-xl text-white min-h-screen flex flex-col">
+    <!-- Page Layer -->
 
-        <?= $this->include('partials/navbar') ?>
+    <main class="relative z-10 font-athiti text-xl text-white min-h-screen flex flex-col">
+
 
         <div class="container m-auto flex w-full justify-between items-center mx-auto px-6 pb-16">
 
@@ -61,7 +63,7 @@
         <div class="container m-24 w-full items-center text-center mx-auto">
             <p class="text-2xl font-bold">Explore the futuristic city of ___ as Abrion, where every district is controlled by an A.I. system. Override its logic, program your escape, liberate its citizens, and restore humanity’s control—one line of code at a time.</p>
         </div>
-    </div>
+    </main>
 
 
 </body>

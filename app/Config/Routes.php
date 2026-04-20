@@ -10,3 +10,10 @@ $routes->get('/', 'Pages\Home::index');
 // Routes for each page
 // $routes->get('/about', 'Pages::about');
 $routes->get('feedback', 'Pages\Feedback::feedback');        
+
+$routes->get('gallery', 'Pages\Gallery::gallery');
+
+
+// Admin routes
+$routes->get('admin', 'Admin\Admin::admin');
+$routes->post('admin/gallery/upload', 'Admin\Pages\AdminGallery::upload');

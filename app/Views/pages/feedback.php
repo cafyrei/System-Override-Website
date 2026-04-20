@@ -32,6 +32,15 @@
                 <h2 class="mt-8">Send us your Ideas, Suggestions, and Feedback</h2>
 
                 <form action="#" class="w-full ">
+
+                    <div class="w-full max-w-md mx-auto mt-6">
+                        <select class="w-full h-full border outline-none rounded-md px-4 py-2 text-sm text-[#525252] bg-white">
+                            <option>Select</option>
+                            <option>Suggestions</option>
+                            <option>Bug Reports</option>
+                        </select>
+                    </div>
+
                     <div class="w-full max-w-md mx-auto">
                         <input placeholder="Your Name" type="text" id="name" name="name" class="mt-6 block w-full rounded-md text-[#525252]
                          bg-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-4 py-2 font-athiti font-normal placeholder:font-slackey">
@@ -64,7 +73,7 @@
 
                     <button
                         type="submit"
-                        class="block mx-auto bg-cyan-900/70 font-normal shadow-sm hover:bg-cyan-600 text-white py-2 px-12 rounded mt-6 text-center">
+                        class="block mx-auto bg-cyan-600/70 font-normal shadow-sm hover:bg-cyan-600 text-white py-2 px-12 rounded mt-6 text-center">
                         Submit Feedback
                     </button>
                 </form>

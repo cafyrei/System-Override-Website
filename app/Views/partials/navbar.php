@@ -21,7 +21,7 @@
                 <a href="#" class="text-white hover:text-gray-300">About</a>
                 <a href="<?= base_url('/feedback') ?>" class="text-white hover:text-gray-300">Feedback</a>
                 <a href="<?= base_url('/') ?>" class="text-white hover:text-gray-300">Home</a>
-                <a href="#" class="text-white hover:text-gray-300">Gallery</a>
+                <a href="<?= base_url('/gallery') ?>" class="text-white hover:text-gray-300">Gallery</a>
                 <a href="#" class="text-white hover:text-gray-300">Patches</a>
             </div>
             <div class="font-normal">

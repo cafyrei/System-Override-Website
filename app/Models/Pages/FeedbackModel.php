@@ -18,5 +18,6 @@ class FeedbackModel extends Model
         'feedback_type',
         'comment',
         'email',
+        'status',
     ];
 }

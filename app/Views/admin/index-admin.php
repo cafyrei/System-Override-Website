@@ -56,152 +56,215 @@
             </header>
 
             <main class="flex-1 overflow-y-auto p-8">
+                <div class="max-w-5xl mx-auto">
+                    <section id="dashboard" class="admin-section space-y-6">
+                        <div class="flex flex-col lg:flex-row gap-6">
+                            <div class="flex-1 space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                </div>
 
-                <section id="dashboard" class="admin-section space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                            <p class="text-gray-500 text-sm font-medium">Total Patches</p>
-                            <p class="text-3xl font-bold">24</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                            <p class="text-gray-500 text-sm font-medium">Gallery Items</p>
-                            <p class="text-3xl font-bold">142</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                            <p class="text-gray-500 text-sm font-medium">Unread Feedback</p>
-                            <p class="text-3xl font-bold text-blue-600">12</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="patches" class="admin-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                        <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-upload text-blue-500"></i> New Patch Release</h2>
-                        <form class="grid grid-cols-2 gap-4">
-                            <div class="col-span-2 md:col-span-1">
-                                <label class="block text-sm font-semibold mb-1">Patch Version (e.g. v1.0.5)</label>
-                                <input type="text" class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="v1.0.0" />
+                                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                                    <div class="p-4 border-b font-bold">Recent System Events</div>
+                                    <table class="w-full text-sm text-left">
+                                        <tr class="border-b bg-gray-50/50">
+                                            <th class="p-3">User</th>
+                                            <th class="p-3">Action</th>
+                                            <th class="p-3">Time</th>
+                                        </tr>
+                                        <tr class="border-b">
+                                            <td class="p-3 font-medium">Allen</td>
+                                            <td class="p-3">Uploaded Patch v1.0.5</td>
+                                            <td class="p-3 text-gray-500">2 mins ago</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
-                            <div class="col-span-2 md:col-span-1">
-                                <label class="block text-sm font-semibold mb-1">Patch File (.zip, .exe)</label>
-                                <input type="file" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+
+                            <div class="w-full lg:w-72 space-y-6">
+                                <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg">
+                                    <h3 class="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">System Status</h3>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                                        <span class="text-sm">Database Online</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                                        <span class="text-sm">Vercel Build: Success</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-span-2">
-                                <label class="block text-sm font-semibold mb-1">Release Notes</label>
-                                <textarea rows="4" class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="What changed in this update?"></textarea>
-                            </div>
-                            <button class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 w-fit transition">Publish Patch</button>
-                        </form>
-                    </div>
-                </section>
-
-                <section id="gallery" class="admin-section hidden space-y-6">
-                    <form action="<?= site_url('admin/gallery/upload') ?>"
-                        method="POST"
-                        enctype="multipart/form-data"
-                        class="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
-                        id="galleryForm">
-
-                        <h2 class="text-lg font-bold mb-4">Add Gallery Image</h2>
-
-                        <!-- Upload Area (Initial State) -->
-                        <div id="uploadArea" class="relative border-2 border-dashed border-gray-300 rounded-xl p-10 flex flex-col items-center justify-center text-gray-500 hover:border-blue-400 transition cursor-pointer mb-4 block w-full">
-                            <i class="fas fa-cloud-upload-alt text-4xl mb-3"></i>
-                            <p class="font-medium">Click or drag images to upload</p>
-                            <p class="text-xs">PNG, JPG or WebP (Max 10MB)</p>
-
-                            <input type="file"
-                                name="image"
-                                id="fileInput"
-                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                accept="image/*"
-                                multiple>
                         </div>
+                    </section>
 
-                        <!-- Preview Area (Hidden Initially) -->
-                        <div id="previewArea" class="hidden mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-                            <div class="flex items-center text-green-800 mb-3">
-                                <i class="fas fa-check-circle text-xl mr-2"></i>
-                                <span class="font-semibold">✅ Images selected successfully!</span>
+                    <section id="patches" class="admin-section hidden space-y-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-upload text-blue-500"></i> New Patch Release</h2>
+                            <form class="grid grid-cols-2 gap-4">
+                                <div class="col-span-2 md:col-span-1">
+                                    <label class="block text-sm font-semibold mb-1">Patch Version (e.g. v1.0.5)</label>
+                                    <input type="text" class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="v1.0.0" />
+                                </div>
+                                <div class="col-span-2 md:col-span-1">
+                                    <label class="block text-sm font-semibold mb-1">Patch File (.zip, .exe)</label>
+                                    <input type="file" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-sm font-semibold mb-1">Release Notes</label>
+                                    <textarea rows="4" class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="What changed in this update?"></textarea>
+                                </div>
+                                <button class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 w-fit transition">Publish Patch</button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section id="gallery" class="admin-section hidden space-y-6">
+                        <form action="<?= site_url('admin/gallery/upload') ?>"
+                            method="POST"
+                            enctype="multipart/form-data"
+                            class="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
+                            id="galleryForm">
+
+                            <h2 class="text-lg font-bold mb-4">Add Gallery Image</h2>
+
+                            <!-- Upload Area (Initial State) -->
+                            <div id="uploadArea" class="relative border-2 border-dashed border-gray-300 rounded-xl p-10 flex flex-col items-center justify-center text-gray-500 hover:border-blue-400 transition cursor-pointer mb-4 block w-full">
+                                <i class="fas fa-cloud-upload-alt text-4xl mb-3"></i>
+                                <p class="font-medium">Click or drag images to upload</p>
+                                <p class="text-xs">PNG, JPG or WebP (Max 10MB)</p>
+
+                                <input type="file"
+                                    name="image"
+                                    id="fileInput"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                    accept="image/*"
+                                    multiple>
                             </div>
-                            <div id="imagePreviews" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
-                            <button type="button" id="changeImages" class="w-1/4 bg-[#63C1F8] text-white font-bold py-3 px-6 mt-6 rounded-lg hover:bg-[#0379A0] transition duration-200 flex items-center justify-center">
-                                <i class="fas fa-edit mr-1"></i>Change Images
+
+                            <!-- Preview Area (Hidden Initially) -->
+                            <div id="previewArea" class="hidden mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
+                                <div class="flex items-center text-green-800 mb-3">
+                                    <i class="fas fa-check-circle text-xl mr-2"></i>
+                                    <span class="font-semibold">✅ Images selected successfully!</span>
+                                </div>
+                                <div id="imagePreviews" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+                                <button type="button" id="changeImages" class="w-1/4 bg-[#63C1F8] text-white font-bold py-3 px-6 mt-6 rounded-lg hover:bg-[#0379A0] transition duration-200 flex items-center justify-center">
+                                    <i class="fas fa-edit mr-1"></i>Change Images
+                                </button>
+                            </div>
+
+                            <!-- Form Fields (Caption & Notes) -->
+                            <div class="mt-6">
+                                <label class="block text-sm font-semibold mb-1 text-gray-700">Image Caption</label>
+                                <input type="text"
+                                    name="caption"
+                                    class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                    placeholder="Epic Boss Fight Screenshot..." />
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="block text-sm font-semibold mb-1 text-gray-700">Release Notes</label>
+                                <textarea name="description"
+                                    rows="4"
+                                    class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                    placeholder="What changed in this update?"></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit"
+                                class="w-full bg-[#14C1FA] text-white font-bold py-3 px-6 mt-6 rounded-lg hover:bg-[#0379A0] transition duration-200 flex items-center justify-center">
+                                <i class="fas fa-save mr-2"></i>
+                                Save to Gallery
                             </button>
+                        </form>
+                    </section>
+
+                    <section id="feedback" class="admin-section hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-bold">Player Inbox</h2>
+                            <select id="feedback-filter" class="border rounded-lg px-4 py-2 text-sm bg-white shadow-sm">
+                                <option value="all">All Feedback</option>
+                                <option value="bug_report">Bug Reports</option>
+                                <option value="suggestion">Suggestions</option>
+                            </select>
                         </div>
 
-                        <!-- Form Fields (Caption & Notes) -->
-                        <div class="mt-6">
-                            <label class="block text-sm font-semibold mb-1 text-gray-700">Image Caption</label>
-                            <input type="text"
-                                name="caption"
-                                class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                                placeholder="Epic Boss Fight Screenshot..." />
-                        </div>
+                        <div class="flex gap-6 h-[calc(100vh-250px)]">
+                            <div class="w-1/3 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+                                <?php foreach ($feedbacks_data as $item) : ?>
 
-                        <div class="mt-4">
-                            <label class="block text-sm font-semibold mb-1 text-gray-700">Release Notes</label>
-                            <textarea name="description"
-                                rows="4"
-                                class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                                placeholder="What changed in this update?"></textarea>
-                        </div>
+                                    <div
+                                        class="feedback-item bg-white p-4 rounded-lg border border-gray-200 cursor-pointer hover:border-blue-500 transition shadow-sm"
+                                        data-id="<?= esc($item['feedback_id']) ?>"
+                                        data-username="<?= esc($item['username']) ?>"
+                                        data-comment="<?= esc($item['comment']) ?>"
+                                        data-email="<?= esc($item['email']) ?>"
+                                        data-type="<?= esc($item['feedback_type']) ?>"
+                                        data-time="<?= time_ago($item['created_at']) ?>"
+                                        data-text="<?= esc($item['comment']) ?>"
+                                        data-status="<?= esc($item['status']) ?>">
 
-                        <!-- Submit Button -->
-                        <button type="submit"
-                            class="w-full bg-[#14C1FA] text-white font-bold py-3 px-6 mt-6 rounded-lg hover:bg-[#0379A0] transition duration-200 flex items-center justify-center">
-                            <i class="fas fa-save mr-2"></i>
-                            Save to Gallery
-                        </button>
-                    </form>
-                </section>
+                                        <div class="flex justify-between text-xs text-gray-500 mb-1">
+                                            <span><?= $item['username'] ?></span>
+                                            <span class="<?= $item['status'] === 'reviewed' ? 'text-green-600' : 'text-gray-500' ?>">
+                                                <?= $item['status'] === 'reviewed' ? 'reviewed' : time_ago($item['created_at']) ?>
+                                            </span>
+                                        </div>
+                                        <p class="text-sm font-bold truncate"><?= $item['comment'] ?></p>
+                                        <span class="text-[10px] uppercase font-black tracking-tighter <?= $item['feedback_type'] === 'bug_report' ? 'text-red-500' : 'text-amber-500' ?>">
+                                            <?= $item['feedback_type'] ?>
+                                        </span>
+                                    </div>
 
-                <section id="feedback" class="admin-section hidden space-y-4">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-bold">Recent Player Suggestions</h2>
-                        <select class="border rounded-md px-3 py-1 text-sm outline-none">
-                            <option>Newest First</option>
-                            <option>Oldest First</option>
-                            <option>Bug Reports</option>
-                        </select>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-lg border-l-4 border-amber-400 shadow-sm flex justify-between items-start">
-                        <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="font-bold text-gray-800">DragonSlayer99</span>
-                                <span class="text-xs bg-gray-100 px-2 py-0.5 rounded text-gray-500">2 hours ago</span>
+                                <?php endforeach; ?>
                             </div>
-                            <p class="text-gray-600">"The new fire mage class feels slightly underpowered in PvP. Can we look at the mana costs?"</p>
-                            <div class="mt-3 flex gap-2">
-                                <button class="text-xs font-bold text-blue-600 hover:underline">Mark as Reviewed</button>
-                                <button class="text-xs font-bold text-red-600 hover:underline">Delete</button>
+
+                            <div class="flex-1 bg-white rounded-xl border border-gray-200 flex flex-col shadow-sm">
+                                <div class="p-8 flex-1">
+
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div>
+                                            <h3 id="fb-title" class="text-2xl font-black mb-2">Feedback Detail</h3>
+
+                                            <p id="fb-user" class="text-gray-500 mb-1"></p>
+                                            <p id="fb-email" class="text-gray-400 text-sm"></p>
+                                        </div>
+
+                                        <div class="flex gap-2">
+                                            <button id="mark-reviewed"
+                                                disabled
+                                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold opacity-50 cursor-not-allowed">
+                                                Mark as Reviewed
+                                            </button>
+
+                                            <button id="delete-feedback"
+                                                disabled
+                                                class="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-bold opacity-50 cursor-not-allowed">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div id="fb-comment"
+                                        class="bg-gray-50 p-6 rounded-xl italic text-gray-700 leading-relaxed border border-gray-100">
+                                        Select an item from the left to read the full player comment and technical details.
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                        <span class="text-xs font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2 py-1 rounded">Suggestion</span>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-lg border-l-4 border-red-500 shadow-sm flex justify-between items-start">
-                        <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="font-bold text-gray-800">NoobMaster69</span>
-                                <span class="text-xs bg-gray-100 px-2 py-0.5 rounded text-gray-500">Yesterday</span>
-                            </div>
-                            <p class="text-gray-600">"Game crashes when I try to enter the 'Forgotten Forest' zone on MacOS."</p>
-                            <div class="mt-3 flex gap-2">
-                                <button class="text-xs font-bold text-blue-600 hover:underline">Mark as Fixed</button>
-                                <button class="text-xs font-bold text-red-600 hover:underline">Delete</button>
-                            </div>
-                        </div>
-                        <span class="text-xs font-bold uppercase tracking-wider bg-red-100 text-red-700 px-2 py-1 rounded">Bug Report</span>
-                    </div>
-                </section>
-
+                    </section>
+                </div><P></P>
             </main>
         </div>
     </div>
 
+    <script>
+        window.markReviewedUrl = '<?= site_url("admin/feedback/mark_reviewed") ?>';
+        window.deleteFeedbackUrl = '<?= site_url("admin/feedback/delete_feedback") ?>'; // ✅ Add this
+    </script>
+    <script src="<?= base_url('js/admin/feedback.js') ?>"></script>
     <script src="<?= base_url('js/admin/gallery.js') ?>"></script>
+</body>
 
 </body>
 

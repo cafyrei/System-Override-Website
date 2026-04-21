@@ -16,7 +16,5 @@ class Gallery extends BaseController
         ];
 
         return view('pages/gallery', $data);
-    }
-
-    
+    }    
 }

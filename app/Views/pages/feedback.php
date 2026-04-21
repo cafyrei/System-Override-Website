@@ -31,13 +31,13 @@
 
                 <h2 class="mt-8">Send us your Ideas, Suggestions, and Feedback</h2>
 
-                <form action="#" class="w-full ">
+                <form action="<?= base_url('feedback/send_feedback') ?>" method="post" class="w-full">
 
                     <div class="w-full max-w-md mx-auto mt-6">
-                        <select class="w-full h-full border outline-none rounded-md px-4 py-2 text-sm text-[#525252] bg-white">
-                            <option>Select</option>
-                            <option>Suggestions</option>
-                            <option>Bug Reports</option>
+                        <select name="feedback_type" class="cursor-pointer w-full h-full border outline-none rounded-md px-4 py-2 text-sm text-[#525252] bg-white">
+                            <option value="" disabled selected>Select Feedback Type</option>
+                            <option value="suggestion">Suggestions</option>
+                            <option value="bug_report">Bug Reports</option>
                         </select>
                     </div>
 
@@ -73,7 +73,7 @@
 
                     <button
                         type="submit"
-                        class="block mx-auto bg-cyan-600/70 font-normal shadow-sm hover:bg-cyan-600 text-white py-2 px-12 rounded mt-6 text-center">
+                        class="block cursor-pointer mx-auto bg-cyan-600/70 font-normal shadow-sm hover:bg-cyan-600 text-white py-2 px-12 rounded mt-6 text-center">
                         Submit Feedback
                     </button>
                 </form>

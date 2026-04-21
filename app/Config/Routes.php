@@ -9,9 +9,14 @@ $routes->get('/', 'Pages\Home::index');
 
 // Routes for each page
 // $routes->get('/about', 'Pages::about');
-$routes->get('feedback', 'Pages\Feedback::feedback');        
+$routes->get('gallery', 'Pages\Gallery::fetch');
 
-$routes->get('gallery', 'Pages\Gallery::gallery');
+
+// Feedback
+$routes->get('feedback', 'Pages\Feedback::feedback');        
+$routes->post('feedback/send_feedback', 'Pages\Feedback::send_feedback');
+
+
 
 
 // Admin routes

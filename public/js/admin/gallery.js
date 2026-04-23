@@ -1,122 +1,198 @@
-// File Upload Verification & Preview
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+  // =============================
+  // ELEMENTS
+  // =============================
   const fileInput = document.getElementById("fileInput");
   const uploadArea = document.getElementById("uploadArea");
   const previewArea = document.getElementById("previewArea");
-  const imagePreviews = document.getElementById("imagePreviews");
-  const changeImagesBtn = document.getElementById("changeImages");
+  const galleryActions = document.getElementById("gallery-actions");
 
-  // File selection handler
-  fileInput.addEventListener("change", handleFiles);
+  const imagePreview = document.getElementById("imagePreview");
+  const fileName = document.getElementById("fileName");
+  const fileSize = document.getElementById("fileSize");
 
-  // Drag & Drop handlers
-  uploadArea.addEventListener("dragover", handleDragOver);
-  uploadArea.addEventListener("dragleave", handleDragLeave);
-  uploadArea.addEventListener("drop", handleDrop);
+  const form = document.getElementById("galleryForm");
+  const titleInput = document.getElementById("form-title");
+  const descInput = document.getElementById("form-desc");
+  const editId = document.getElementById("edit-id");
 
-  // Change images button
-  changeImagesBtn?.addEventListener("click", resetUploadArea);
+  const formTitle = document.getElementById("gallery-form-title");
+  const submitText = document.getElementById("submit-btn-text");
+
+  // =============================
+  // FILE UPLOAD HANDLING
+  // =============================
+  if (fileInput) fileInput.addEventListener("change", handleFiles);
+
+  if (uploadArea) {
+    uploadArea.addEventListener("dragover", handleDragOver);
+    uploadArea.addEventListener("dragleave", handleDragLeave);
+    uploadArea.addEventListener("drop", handleDrop);
+  }
 
   function handleFiles(e) {
     const files = e.target.files;
-    if (files.length > 0) {
-      showPreview(files);
-    }
+    if (files.length > 0) showPreview(files[0]);
   }
 
   function handleDragOver(e) {
     e.preventDefault();
-    uploadArea.classList.add(
-      "bg-blue-50",
-      "border-blue-400",
-      "ring-2",
-      "ring-blue-200",
-    );
+    uploadArea.classList.add("bg-blue-50", "border-blue-400", "ring-2");
   }
 
   function handleDragLeave(e) {
     e.preventDefault();
-    uploadArea.classList.remove(
-      "bg-blue-50",
-      "border-blue-400",
-      "ring-2",
-      "ring-blue-200",
-    );
+    uploadArea.classList.remove("bg-blue-50", "border-blue-400", "ring-2");
   }
 
   function handleDrop(e) {
     e.preventDefault();
-    uploadArea.classList.remove(
-      "bg-blue-50",
-      "border-blue-400",
-      "ring-2",
-      "ring-blue-200",
-    );
+    uploadArea.classList.remove("bg-blue-50", "border-blue-400", "ring-2");
 
     const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      const dataTransfer = new DataTransfer();
-      Array.from(files).forEach((file) => {
-        if (file.type.startsWith("image/")) {
-          dataTransfer.items.add(file);
-        }
-      });
-      fileInput.files = dataTransfer.files;
-      showPreview(files);
+    if (files.length > 0 && files[0].type.startsWith("image/")) {
+      const dt = new DataTransfer();
+      dt.items.add(files[0]);
+      fileInput.files = dt.files;
+
+      showPreview(files[0]);
     }
   }
 
-  function showPreview(files) {
-    // Hide upload area, show preview
+  function showPreview(file) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      imagePreview.src = e.target.result;
+      fileName.textContent = file.name;
+      fileSize.textContent = formatFileSize(file.size);
+    };
+
+    reader.readAsDataURL(file);
+
     uploadArea.classList.add("hidden");
     previewArea.classList.remove("hidden");
-
-    // Clear previous previews
-    imagePreviews.innerHTML = "";
-
-    // Generate previews
-    Array.from(files)
-      .slice(0, 8)
-      .forEach((file, index) => {
-        // Limit to 8 images
-        if (file.type.startsWith("image/") && file.size <= 10 * 1024 * 1024) {
-          // 10MB limit
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const preview = createPreviewHTML(
-              e.target.result,
-              file.name,
-              file.size,
-            );
-            imagePreviews.insertAdjacentHTML("beforeend", preview);
-          };
-          reader.readAsDataURL(file);
-        }
-      });
+    galleryActions.classList.remove("hidden");
   }
 
-  function createPreviewHTML(imageSrc, fileName, fileSize) {
-    return `
-            <div class="group relative bg-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <img src="${imageSrc}" 
-                     class="w-full h-24 md:h-28 object-cover" 
-                     alt="${fileName}">
-                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all"></div>
-                <div class="absolute top-1 right-1 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    ${formatFileSize(fileSize)}
-                </div>
-                <p class="text-xs text-gray-600 mt-1 truncate px-1">${fileName}</p>
-            </div>
-        `;
-  }
-
-  function resetUploadArea() {
+  function resetUploadUI() {
     fileInput.value = "";
+
+    imagePreview.src = "";
+    fileName.textContent = "";
+    fileSize.textContent = "";
+
     previewArea.classList.add("hidden");
     uploadArea.classList.remove("hidden");
-    imagePreviews.innerHTML = "";
   }
 
+  // =============================
+  // STATE SYSTEM (IMPORTANT PART)
+  // =============================
+
+  function setAddMode() {
+    form.reset();
+    editId.value = "";
+
+    resetUploadUI();
+
+    formTitle.innerText = "Add New Image";
+    submitText.innerText = "Save to Gallery";
+
+    galleryActions.classList.add("hidden");
+
+    document.querySelectorAll(".gallery-item").forEach((el) => {
+      el.classList.remove("border-blue-500");
+    });
+  }
+
+  function setEditMode(item, event) {
+    document.querySelectorAll(".gallery-item").forEach((el) => {
+      el.classList.remove("border-blue-500");
+    });
+
+    event.currentTarget.classList.add("border-blue-500");
+
+    editId.value = item.gallery_id;
+    titleInput.value = item.gallery_title;
+    descInput.value = item.gallery_description;
+
+    imagePreview.src = window.baseUrl + "/" + item.image_path;
+    fileName.textContent = "Existing Image";
+    fileSize.textContent = "";
+
+    uploadArea.classList.add("hidden");
+    previewArea.classList.remove("hidden");
+    galleryActions.classList.remove("hidden");
+
+    formTitle.innerText = "Edit Image";
+    submitText.innerText = "Update Image";
+  }
+
+  // =============================
+  // GLOBAL ACTIONS (CALLED FROM HTML)
+  // =============================
+
+  window.showGalleryDetail = function (event, item) {
+    setEditMode(item, event);
+  };
+
+  window.resetForm = function () {
+    setAddMode();
+  };
+
+  window.deleteGalleryItem = function () {
+    const id = editId.value;
+
+    if (!id) return;
+
+    if (!confirm("Delete this image permanently?")) return;
+
+    fetch(`${window.deleteGalleryUrl}/${id}`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setAddMode();
+          location.reload();
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  // =============================
+  // SECTION SWITCHING
+  // =============================
+  window.showSection = function (sectionId, event) {
+    document.querySelectorAll(".admin-section").forEach((section) => {
+      section.classList.add("hidden");
+    });
+
+    document.getElementById(sectionId).classList.remove("hidden");
+
+    const titles = {
+      dashboard: "Dashboard Overview",
+      patches: "Manage Game Patches",
+      gallery: "Gallery & Media Management",
+      feedback: "Player Feedback & Suggestions",
+    };
+
+    document.getElementById("page-title").innerText =
+      titles[sectionId] || "Admin Panel";
+
+    document.querySelectorAll(".nav-link").forEach((link) => {
+      link.classList.remove("bg-slate-800", "text-white");
+    });
+
+    if (event) {
+      event.currentTarget.classList.add("bg-slate-800", "text-white");
+    }
+  };
+
+  // =============================
+  // UTIL
+  // =============================
   function formatFileSize(bytes) {
     if (bytes === 0) return "0 Bytes";
     const k = 1024;
@@ -125,27 +201,3 @@ document.addEventListener("DOMContentLoaded", function () {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
   }
 });
-
-function showSection(sectionId) {
-  document.querySelectorAll(".admin-section").forEach((section) => {
-    section.classList.add("hidden");
-  });
-
-  // Show the selected one
-  document.getElementById(sectionId).classList.remove("hidden");
-
-  const titles = {
-    dashboard: "Dashboard Overview",
-    patches: "Manage Game Patches",
-    gallery: "Gallery & Media Management",
-    feedback: "Player Feedback & Suggestions",
-  };
-  document.getElementById("page-title").innerText = titles[sectionId];
-
-  // Update Sidebar Styles
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    link.classList.remove("bg-slate-800", "text-white");
-    link.classList.add("hover:bg-slate-800", "transition");
-  });
-  event.currentTarget.classList.add("bg-slate-800", "text-white");
-}

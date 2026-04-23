@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Game Admin Master Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="<?= base_url('assets/css/output.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('css/output.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('css/admin/gallery.css') ?>" />
 </head>
 
 <body class="bg-gray-50 font-sans text-gray-900">
@@ -117,65 +118,94 @@
                         </div>
                     </section>
 
-                    <section id="gallery" class="admin-section hidden space-y-6">
-                        <form action="<?= site_url('admin/gallery/upload') ?>"
-                            method="POST"
-                            enctype="multipart/form-data"
-                            class="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
-                            id="galleryForm">
+                    <section id="gallery" class="admin-section hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-bold">Gallery Management</h2>
+                            <div class="text-sm text-gray-500">
+                                Total Images: <span class="font-bold"><?= is_array($gallery_data) ? count($gallery_data) : 0 ?></span>
+                            </div>
+                        </div>
 
-                            <h2 class="text-lg font-bold mb-4">Add Gallery Image</h2>
+                        <div class="flex gap-6 h-[calc(100vh-250px)]">
 
-                            <!-- Upload Area (Initial State) -->
-                            <div id="uploadArea" class="relative border-2 border-dashed border-gray-300 rounded-xl p-10 flex flex-col items-center justify-center text-gray-500 hover:border-blue-400 transition cursor-pointer mb-4 block w-full">
-                                <i class="fas fa-cloud-upload-alt text-4xl mb-3"></i>
-                                <p class="font-medium">Click or drag images to upload</p>
-                                <p class="text-xs">PNG, JPG or WebP (Max 10MB)</p>
+                            <div class="w-1/3 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+                                <?php if (!empty($gallery_data)) : ?>
+                                    <?php foreach ($gallery_data as $img) : ?>
+                                        <div class="gallery-item bg-white p-3 rounded-lg border border-gray-200 cursor-pointer hover:border-blue-500 transition shadow-sm group"
+                                            onclick="showGalleryDetail(event, <?= htmlspecialchars(json_encode($img)) ?>)">
 
-                                <input type="file"
-                                    name="image"
-                                    id="fileInput"
-                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                    accept="image/*"
-                                    multiple>
+                                            <div class="flex gap-3">
+                                                <img src="<?= base_url($img['image_path']) ?>" class="w-16 h-16 rounded object-cover border border-gray-100" alt="">
+                                                <div class="flex-1 min-w-0">
+                                                    <p class="text-sm font-bold truncate text-gray-800"><?= esc($img['gallery_title']) ?></p>
+                                                    <p class="text-xs text-gray-500 truncate"><?= esc($img['gallery_description']) ?></p>
+                                                    <span class="text-[10px] text-blue-500 font-bold uppercase mt-1 block">View Details</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <div class="text-center py-10 text-gray-400 text-sm italic">No images uploaded.</div>
+                                <?php endif; ?>
                             </div>
 
-                            <!-- Preview Area (Hidden Initially) -->
-                            <div id="previewArea" class="hidden mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-                                <div class="flex items-center text-green-800 mb-3">
-                                    <i class="fas fa-check-circle text-xl mr-2"></i>
-                                    <span class="font-semibold">✅ Images selected successfully!</span>
+                            <div class="flex-1 bg-white rounded-xl border border-gray-200 flex flex-col shadow-sm h-[70vh] overflow-hidden">
+                                <div class="p-8 overflow-y-auto h-full">
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div>
+                                            <h3 id="gallery-form-title" class="text-2xl font-black mb-2">Add New Image</h3>
+                                            <p class="text-gray-500 text-sm">Upload a new screenshot or edit an existing one.</p>
+                                        </div>
+                                        <div id="gallery-actions" class="hidden flex gap-2 relative z-50 pointer-events-auto">
+                                            <button onclick="resetForm()" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-100 transition">
+                                                New
+                                            </button>
+                                            <button onclick="deleteGalleryItem()" class="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-100 transition">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <form action="<?= site_url('admin/gallery/upload') ?>" method="POST" enctype="multipart/form-data" id="galleryForm">
+                                        <input type="hidden" name="gallery_id" id="edit-id">
+
+                                        <div class="grid grid-cols-1 gap-6">
+                                            <div id="uploadArea" class="relative border-2 border-dashed border-gray-300 rounded-xl p-10 flex flex-col items-center justify-center text-gray-500 hover:border-blue-400 transition cursor-pointer">
+                                                <i class="fas fa-cloud-upload-alt text-4xl mb-3"></i>
+                                                <p class="font-medium text-sm">Click to upload or drag image</p>
+                                                <input type="file" name="image" id="fileInput" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*">
+                                            </div>
+
+                                            <div id="previewArea" class="hidden flex flex-col  h-[250px]">
+
+                                                <div class="w-full h-64 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
+                                                    <img id="imagePreview" class="w-full h-full object-cover">
+                                                </div>
+
+                                                <div class="p-4 border-t text-sm">
+                                                    <p id="fileName"></p>
+                                                    <p id="fileSize" class="text-gray-500"></p>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label class="block text-sm font-bold text-gray-700 mb-1">Title</label>
+                                                <input type="text" name="caption" id="form-title" class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Epic Screenshot...">
+                                            </div>
+
+                                            <div>
+                                                <label class="block text-sm font-bold text-gray-700 mb-1">Description</label>
+                                                <textarea name="description" id="form-desc" rows="4" class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Notes about this image..."></textarea>
+                                            </div>
+
+                                            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                                                <i class="fas fa-save"></i> <span id="submit-btn-text">Save to Gallery</span>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div id="imagePreviews" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
-                                <button type="button" id="changeImages" class="w-1/4 bg-[#63C1F8] text-white font-bold py-3 px-6 mt-6 rounded-lg hover:bg-[#0379A0] transition duration-200 flex items-center justify-center">
-                                    <i class="fas fa-edit mr-1"></i>Change Images
-                                </button>
                             </div>
-
-                            <!-- Form Fields (Caption & Notes) -->
-                            <div class="mt-6">
-                                <label class="block text-sm font-semibold mb-1 text-gray-700">Image Caption</label>
-                                <input type="text"
-                                    name="caption"
-                                    class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                                    placeholder="Epic Boss Fight Screenshot..." />
-                            </div>
-
-                            <div class="mt-4">
-                                <label class="block text-sm font-semibold mb-1 text-gray-700">Release Notes</label>
-                                <textarea name="description"
-                                    rows="4"
-                                    class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                                    placeholder="What changed in this update?"></textarea>
-                            </div>
-
-                            <!-- Submit Button -->
-                            <button type="submit"
-                                class="w-full bg-[#14C1FA] text-white font-bold py-3 px-6 mt-6 rounded-lg hover:bg-[#0379A0] transition duration-200 flex items-center justify-center">
-                                <i class="fas fa-save mr-2"></i>
-                                Save to Gallery
-                            </button>
-                        </form>
+                        </div>
                     </section>
 
                     <section id="feedback" class="admin-section hidden">
@@ -253,19 +283,22 @@
                             </div>
                         </div>
                     </section>
-                </div><P></P>
+                </div>
             </main>
         </div>
     </div>
 
     <script>
         window.markReviewedUrl = '<?= site_url("admin/feedback/mark_reviewed") ?>';
-        window.deleteFeedbackUrl = '<?= site_url("admin/feedback/delete_feedback") ?>'; // ✅ Add this
+        window.deleteFeedbackUrl = '<?= site_url("admin/feedback/delete_feedback") ?>';
+        window.baseUrl = "<?= base_url() ?>";
+        window.deleteGalleryUrl = "<?= site_url('admin/gallery/delete') ?>";
     </script>
     <script src="<?= base_url('js/admin/feedback.js') ?>"></script>
     <script src="<?= base_url('js/admin/gallery.js') ?>"></script>
-</body>
 
+    <!-- Animations -->
+    <script src="<?= base_url('js/admin/animations/ui-animation.js') ?>"></script>
 </body>
 
 </html>

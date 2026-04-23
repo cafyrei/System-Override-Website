@@ -12,6 +12,7 @@ class GalleryModel extends Model
     protected $returnType = 'array';
 
     protected $allowedFields = [
+        'gallery_id',
         'image_path',
         'gallery_title',
         'gallery_description',

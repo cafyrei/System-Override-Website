@@ -5,67 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Slackey&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&family=Black+Han+Sans&family=Slackey&display=swap" rel="stylesheet">
-    <title>System Override | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Slackey&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url('css/pages/index.css') ?>">
+    <title>System Override | Neural Core</title>
 </head>
 
-<body class="relative min-h-screen">
+<body>
 
-    <!-- Background Layer -->
-    <div
-        class="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat brightness-75"
-        style="background-image: url('<?= base_url('images/backgrounds/m-background.png') ?>');">
-    </div>
+    <canvas id="matrix-bg"></canvas>
+    <div class="cyber-grid"></div>
+    <div id="dust-container" style="position:fixed; inset:0; z-index:3; pointer-events:none;"></div>
 
-    <!-- Navbar -->
     <?= $this->include('partials/navbar') ?>
 
-    <!-- Page Layer -->
+    <main class="relative z-10">
+        <section class="hero-section px-6 md:px-24">
+            <div class="container mx-auto grid lg:grid-cols-2 gap-12 items-center">
 
-    <main class="relative z-10 font-athiti text-xl text-white min-h-screen flex flex-col">
+                <div class="hero-glass-card">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_10px_#00f2ff]"></span>
+                        <span class="text-[10px] font-mono tracking-[0.4em] text-cyan-500">NEURAL_LINK: ESTABLISHED</span>
+                    </div>
 
+                    <h1 class="glitch-hero text-6xl md:text-8xl font-black mb-2" data-text="INITIALIZING">
+                        INITIALIZING
+                    </h1>
+                    <h2 class="text-4xl md:text-5xl font-black text-cyan-400 italic mb-8 tracking-tighter">
+                        SYSTEM_OVERRIDE
+                    </h2>
 
-        <div class="container m-auto flex w-full justify-between items-center mx-auto px-6 pb-16">
+                    <p class="text-gray-400 text-lg leading-relaxed max-w-md mb-12 border-l-2 border-cyan-500/30 pl-6">
+                        A puzzle-driven game where you redesign the systems that govern a city. </br>
+                        <span class="text-white underline decoration-cyan-500">Nova Axiom</span>. Liberate the citizens. Restore control.
+                    </p>
 
-            <!-- LEFT -->
-            <div class="w-1/2 flex flex-col">
-                <h1 class="text-5xl font-black-han-sans">Initializing System</h1>
-                <h2 class="text-4xl font-black-han-sans">Entering: Overdrive</h2>
-
-                <p class="mb-4 font-semibold max-w-lg">
-                    A puzzle-driven game where you redesign the systems that govern a city
-                </p>
-
-                <div class="flex w-[60%] gap-4 mb-4 font-slackey">
-                    <button class="w-1/2 border-4 border-[#4CF8FE] px-4 py-2 rounded-lg bg-blue-500/20 hover:bg-blue-500/40 transition">
-                        Play Demo
-                    </button>
-
-                    <button class="w-1/2 border-4 border-white px-4 py-2 rounded-lg bg-white/20 hover:bg-white/40 transition">
-                        Watch Trailer
-                    </button>
+                    <div class="flex flex-wrap gap-6">
+                        <a href="#" class="cyber-btn primary px-10 py-4 font-black text-sm hover:translate-x-2">
+                            RUN_DEMO.EXE
+                        </a>
+                        <a href="#" class="cyber-btn bg-white/5 border border-white/10 px-10 py-4 font-black text-sm hover:bg-white/10">
+                            WATCH_TRAILER
+                        </a>
+                    </div>
                 </div>
 
-                <p class="font-semibold">Developed as an academic game project</p>
+                <div class="hero-logo-container">
+                    <div class="logo-glow"></div>
+                    <img id="parallax-logo" src="<?= base_url('images/main-logo.png') ?>" alt="Logo" class="w-full h-auto drop-shadow-[0_0_30px_rgba(0,242,255,0.3)] transition-transform duration-200">
+
+                    <div class="absolute -bottom-10 right-0 font-mono text-[9px] text-cyan-500/40 text-right space-y-1">
+                        <div>LATENCY: 12ms</div>
+                        <div>PACKET_LOSS: 0%</div>
+                        <div>ENCRYPTION: AES_256</div>
+                    </div>
+                </div>
             </div>
-
-            <!-- RIGHT -->
-            <div class="w-1/2 flex justify-end">
-                <img class="w-full max-w-md h-auto object-contain"
-                    src="<?= base_url('images/main-logo.png') ?>" />
-            </div>
-
-        </div>
-
-        <div class="container m-24 w-full items-center text-center mx-auto">
-            <p class="text-2xl font-bold">Explore the futuristic city of ___ as Abrion, where every district is controlled by an A.I. system. Override its logic, program your escape, liberate its citizens, and restore humanity’s control—one line of code at a time.</p>
-        </div>
+        </section>
     </main>
 
-
+    <script src="<?= base_url('js/main/index.js') ?>"></script>
 </body>
 
 </html>

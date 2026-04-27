@@ -1,12 +1,20 @@
 <?php
 
 namespace App\Controllers\Pages;
+
 use App\Controllers\BaseController;
+use App\Models\Pages\PatchModel;
 
 class Patches extends BaseController
 {
-    public function index(): string
+    public function fetch()
     {
-        return view('pages/patches');
+        $patchModel = new PatchModel();
+
+        $data = [
+            'patches' => $patchModel->findAll(),
+        ];
+
+        return view('pages/patches', $data);
     }
 }

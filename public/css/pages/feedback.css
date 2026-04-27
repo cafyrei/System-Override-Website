@@ -1,66 +1,9 @@
-:root {
-  --cyan: #00f2ff;
-  --panel-bg: rgba(10, 11, 15, 0.85);
-}
-
-body {
-  font-family: "JetBrains Mono", monospace;
-  background: #030406;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 🌌 BACKGROUND ENGINE STYLES */
-#matrix-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  opacity: 0.1;
-  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-}
-
-.cyber-grid {
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  background-image:
-    linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  transform: perspective(1000px) rotateX(60deg) translateY(-200px);
-  transform-origin: top;
-  opacity: 0.4;
-}
-
-.dust {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  background: var(--cyan);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-/* YOUR Scanlines Overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
-  background-size: 100% 4px;
-  pointer-events: none;
-}
-
-/* 📟 TERMINAL STYLES */
+/* feedback.css */
 .terminal-panel {
-  background: var(--panel-bg);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 242, 255, 0.1);
-  box-shadow:
-    0 0 40px rgba(0, 0, 0, 0.8),
-    inset 0 0 20px rgba(0, 242, 255, 0.05);
-  position: relative;
+  border: var(--panel-border);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
 }
 
 .terminal-panel::before {
@@ -70,42 +13,17 @@ body::before {
   right: 20px;
   font-size: 8px;
   color: var(--cyan);
-  letter-spacing: 3px;
-  background: #030406;
+  background: var(--dark-bg);
   padding: 0 10px;
 }
 
 .cyber-input {
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: var(--panel-border);
   color: #fff;
-  transition: all 0.3s ease;
 }
 
 .cyber-input:focus {
-  background: rgba(0, 242, 255, 0.03);
   border-color: var(--cyan);
-  box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
   outline: none;
-}
-
-.transmit-btn {
-  background: var(--cyan);
-  color: #000;
-  font-family: "Orbitron", sans-serif;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  position: relative;
-  overflow: hidden;
-}
-
-.transmit-btn:hover {
-  box-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
-  transform: scale(1.02);
-}
-
-select option {
-  background: #0a0b0f;
-  color: white;
 }

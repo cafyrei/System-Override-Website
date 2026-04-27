@@ -8,6 +8,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('css/admin/gallery.css') ?>" />
+
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-50 font-sans text-gray-900">
@@ -97,24 +105,127 @@
                         </div>
                     </section>
 
-                    <section id="patches" class="admin-section hidden space-y-6">
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                            <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-upload text-blue-500"></i> New Patch Release</h2>
-                            <form class="grid grid-cols-2 gap-4">
-                                <div class="col-span-2 md:col-span-1">
-                                    <label class="block text-sm font-semibold mb-1">Patch Version (e.g. v1.0.5)</label>
-                                    <input type="text" class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="v1.0.0" />
+                    <section id="patches" class="admin-section hidden">
+                        <div class="flex gap-6 h-[calc(100vh-250px)]">
+
+                            <div class="w-1/3 flex flex-col gap-4">
+                                <div class="flex justify-between items-center px-1">
+                                    <h3 class="text-lg font-bold">Patch History</h3>
+                                    <span class="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded-full">
+                                        <?= count($patches_data) ?> Total
+                                    </span>
                                 </div>
-                                <div class="col-span-2 md:col-span-1">
-                                    <label class="block text-sm font-semibold mb-1">Patch File (.zip, .exe)</label>
-                                    <input type="file" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+
+                                <div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+                                    <?php if (!empty($patches_data)) : ?>
+                                        <?php foreach ($patches_data as $patch): ?>
+                                            <div class="patch-list-item bg-white p-4 rounded-xl border border-gray-200 cursor-pointer hover:border-blue-500 transition shadow-sm group relative"
+                                                onclick="editPatch(<?= htmlspecialchars(json_encode($patch)) ?>)">
+
+                                                <div class="flex justify-between items-start mb-1">
+                                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-blue-100 text-blue-700 uppercase">
+                                                        v<?= esc($patch['patch_version']) ?>
+                                                    </span>
+                                                    <span class="text-[10px] text-gray-400 font-medium">
+                                                        <?= date('M d, Y', strtotime($patch['patch_release'])) ?>
+                                                    </span>
+                                                </div>
+
+                                                <p class="font-bold text-gray-800 truncate"><?= esc($patch['patch_title']) ?></p>
+
+                                                <div class="flex items-center gap-2 mt-2">
+                                                    <span class="text-[10px] uppercase tracking-wider font-bold text-gray-500">
+                                                        <?= esc($patch['patch_type']) ?>
+                                                    </span>
+                                                </div>
+
+                                                <div class="absolute right-3 bottom-3 opacity-0 group-hover:opacity-100 transition">
+                                                    <i class="fas fa-edit text-blue-500 text-sm"></i>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <div class="text-center py-10 text-gray-400 text-sm italic border-2 border-dashed rounded-xl">
+                                            No patches found.
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="col-span-2">
-                                    <label class="block text-sm font-semibold mb-1">Release Notes</label>
-                                    <textarea rows="4" class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="What changed in this update?"></textarea>
+                            </div>
+
+                            <div class="flex-1 flex flex-col min-h-0 bg-white p-6 rounded-2xl shadow-md border border-gray-200">
+                                <div class="flex justify-between items-center mb-6 shrink-0">
+                                    <h2 id="patch-form-title" class="text-xl font-bold flex items-center gap-2">
+                                        <i class="fas fa-upload text-blue-500"></i> New Patch Release
+                                    </h2>
+                                    <button onclick="resetPatchForm()" class="text-sm text-blue-600 font-bold hover:underline">+ Create New</button>
                                 </div>
-                                <button class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 w-fit transition">Publish Patch</button>
-                            </form>
+
+                                <form method="post" enctype="multipart/form-data" id="patchForm"
+                                    action="<?= site_url('patches/patches/upload') ?>"
+                                    class="space-y-6 overflow-y-auto pr-2 custom-scrollbar">
+
+                                    <input type="hidden" name="patch_id" id="edit-patch-id">
+                                    <input type="hidden" name="patch_version" id="patch_version">
+
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-semibold mb-1">Patch Title</label>
+                                            <input type="text" name="patch_title" id="patch-title"
+                                                class="w-full border-gray-300 border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                                                placeholder="e.g. The Awakening Update">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-semibold mb-1">Patch Type</label>
+                                            <select name="patch_type" id="patch-type"
+                                                class="w-full border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required>
+                                                <option value="">Select type</option>
+                                                <option value="major">Major Update</option>
+                                                <option value="minor">Minor Update</option>
+                                                <option value="hotfix">Hotfix</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid md:grid-cols-3 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-semibold mb-1">Version Number</label>
+                                            <div class="flex items-center gap-1">
+                                                <input type="number" id="major" min="0" placeholder="1" class="w-12 border p-2 rounded-lg text-center">
+                                                <span class="font-bold">.</span>
+                                                <input type="number" id="minor" min="0" placeholder="0" class="w-12 border p-2 rounded-lg text-center">
+                                                <span class="font-bold">.</span>
+                                                <input type="number" id="patch" min="0" placeholder="0" class="w-12 border p-2 rounded-lg text-center">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-semibold mb-1">Release Date</label>
+                                            <input type="date" name="patch_release" id="patch-release"
+                                                class="w-full border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-semibold mb-1">File Attachment</label>
+                                            <input type="file" name="patch_file"
+                                                class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-semibold mb-1">Release Notes</label>
+                                        <textarea name="patch_description" id="patch-desc" rows="7"
+                                            class="w-full border p-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                                            placeholder="Describe changes, bug fixes, or new features..."></textarea>
+                                    </div>
+
+                                    <div class="flex justify-end gap-3 pt-4 border-t">
+                                        <button type="button" id="delete-patch-btn" class="hidden bg-red-50 text-red-600 font-semibold py-2.5 px-6 rounded-lg hover:bg-red-100 transition">
+                                            Delete Patch
+                                        </button>
+                                        <button type="submit" class="bg-blue-600 text-white font-semibold py-2.5 px-8 rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                                            Publish Update
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </section>
 
@@ -190,7 +301,7 @@
 
                                             <div>
                                                 <label class="block text-sm font-bold text-gray-700 mb-1">Title</label>
-                                                <input type="text" name="caption" id="form-title" class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Epic Screenshot...">
+                                                <input type="text" name="caption" id="gallery-title" class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Epic Screenshot...">
                                             </div>
 
                                             <div>
@@ -294,8 +405,14 @@
         window.baseUrl = "<?= base_url() ?>";
         window.deleteGalleryUrl = "<?= site_url('admin/gallery/delete') ?>";
     </script>
+
+    <script>
+        const DELETE_PATCH_BASE_URL = "<?= site_url('patches/patches/delete/') ?>";
+    </script>
+
     <script src="<?= base_url('js/admin/feedback.js') ?>"></script>
     <script src="<?= base_url('js/admin/gallery.js') ?>"></script>
+    <script src="<?= base_url('js/admin/patches.js') ?>"></script>
 
     <!-- Animations -->
     <script src="<?= base_url('js/admin/animations/ui-animation.js') ?>"></script>

@@ -1,67 +1,21 @@
-:root {
-  --cyan: #00f2ff;
-  --dark-bg: #030406;
-}
+/* index.css */
 
-body {
-  font-family: "JetBrains Mono", monospace;
-  background: var(--dark-bg);
-  overflow-x: hidden;
-  position: relative;
-  color: white;
-}
-
-/* 🌌 BACKGROUND ENGINE */
-#matrix-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  opacity: 0.12;
-  mask-image: radial-gradient(circle at 70% 50%, black 20%, transparent 80%);
-}
-
-.cyber-grid {
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  background-image:
-    linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  transform: perspective(1000px) rotateX(60deg) translateY(-100px);
-  transform-origin: top;
-  opacity: 0.4;
-}
-
-/* Scanlines Overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
-  background-size: 100% 4px;
-  pointer-events: none;
-}
-
-/* 🎨 HERO ENHANCEMENTS */
 .hero-section {
   background: radial-gradient(
     circle at 20% 50%,
     rgba(0, 242, 255, 0.05) 0%,
     transparent 50%
   );
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
 }
 
 .hero-glass-card {
-  background: rgba(10, 11, 15, 0.7);
+  background: var(--glass-bg);
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: var(--panel-border);
   padding: 3rem;
-  border-radius: 4px;
   position: relative;
 }
 
@@ -76,13 +30,21 @@ body::before {
   border-left: 2px solid var(--cyan);
 }
 
-/* Glitch Effect */
 .glitch-hero {
-  position: relative;
   font-family: "Black Han Sans", sans-serif;
-  text-transform: uppercase;
   font-style: italic;
-  letter-spacing: -2px;
+  position: relative;
+}
+
+.cyber-btn.primary {
+  background: var(--cyan);
+  color: #000;
+}
+
+.cyber-btn {
+  font-family: "Orbitron", sans-serif;
+  clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+  transition: 0.3s;
 }
 
 .glitch-hero::before {
@@ -98,54 +60,7 @@ body::before {
   0% {
     clip: rect(31px, 9999px, 94px, 0);
   }
-
-  20% {
-    clip: rect(62px, 9999px, 42px, 0);
-  }
-
-  /* ... higher intensity animations ... */
   100% {
     clip: rect(89px, 9999px, 98px, 0);
   }
-}
-
-/* Buttons */
-.cyber-btn {
-  font-family: "Orbitron", sans-serif;
-  clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-  transition: 0.3s;
-}
-
-.cyber-btn.primary {
-  background: var(--cyan);
-  color: #000;
-}
-
-.hero-logo-container {
-  position: relative;
-  z-index: 5;
-}
-
-.logo-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(
-    circle,
-    rgba(0, 242, 255, 0.15) 0%,
-    transparent 30%
-  );
-  z-index: -1;
-}
-
-.dust {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  background: var(--cyan);
-  border-radius: 50%;
-  pointer-events: none;
 }

@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const fileSize = document.getElementById("fileSize");
 
   const form = document.getElementById("galleryForm");
-  const titleInput = document.getElementById("form-title");
+  const titleInput = document.getElementById("gallery-title");
   const descInput = document.getElementById("form-desc");
   const editId = document.getElementById("edit-id");
 

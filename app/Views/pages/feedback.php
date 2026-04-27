@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/pages/feedback.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/pages/global.css') ?>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <title>System Override | Feedback Terminal</title>
 </head>

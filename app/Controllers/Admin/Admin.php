@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\Pages\FeedbackModel;
 use App\Models\Pages\GalleryModel;
+use App\Models\Pages\PatchModel;
 
 class Admin extends BaseController
 {
@@ -12,10 +13,12 @@ class Admin extends BaseController
     {
         $feedbackModel = new FeedbackModel();
         $galleryModel = new GalleryModel();
+        $patchesModel = new PatchModel();
 
         $data = [
             'feedbacks_data' => $feedbackModel->findAll(),
             'gallery_data'   => $galleryModel->findAll(),
+            'patches_data' => $patchesModel->findAll(),
         ];
 
         return view('admin/index-admin', $data);

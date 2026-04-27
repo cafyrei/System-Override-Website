@@ -9,7 +9,6 @@ $routes->get('/', 'Pages\Home::index');
 
 // Routes for each page
 // $routes->get('/about', 'Pages\Patches::about');
-$routes->get('patches', 'Pages\Patches::index');
 $routes->get('gallery', 'Pages\Gallery::fetch');
 
 // Feedback
@@ -22,3 +21,12 @@ $routes->post('feedback/send_feedback', 'Pages\Feedback::send_feedback');
 $routes->get('admin', 'Admin\Admin::admin');
 $routes->post('admin/gallery/upload', 'Admin\Pages\AdminGallery::upload');
 $routes->post('admin/gallery/delete/(:num)', 'Admin\Pages\AdminGallery::delete/$1');
+
+// About 
+$routes->get('about', 'Pages\About::about');     
+
+
+// Patches
+$routes->get('patches', 'Pages\Patches::fetch');
+$routes->post('patches/patches/upload', 'Admin\Pages\AdminPatch::upload');
+$routes->get('patches/patches/delete/(:num)', 'Admin\Pages\AdminPatch::delete/$1');

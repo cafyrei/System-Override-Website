@@ -41,7 +41,7 @@ window.resetGalleryUI = function () {
     fileName: document.getElementById("fileName"),
     fileSize: document.getElementById("fileSize"),
     form: document.getElementById("galleryForm"),
-    title: document.getElementById("form-title"),
+    title: document.getElementById("gallery-title"),
     desc: document.getElementById("form-desc"),
   };
 

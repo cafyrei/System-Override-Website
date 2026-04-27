@@ -28,7 +28,7 @@
                 <a href="<?= base_url('/gallery') ?>" class="nav-link">Gallery</a>
                 <a href="<?= base_url('/') ?>" class="nav-link">Home</a>
                 <a href="<?= base_url('/feedback') ?>" class="nav-link">Feedback</a>
-                <a href="#" class="nav-link">About</a>
+                <a href="<?= base_url('/about') ?>" class="nav-link">About</a>
             </div>
 
             <!-- Download Button -->

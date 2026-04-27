@@ -32,99 +32,73 @@
             </p>
         </div>
 
-        <div class="space-y-64">
-            <!-- PATCH 1 -->
-            <section class="grid grid-cols-12 items-center gap-16 relative group">
-                <div class="absolute -right-50 top-1/2 -translate-y-1/2 text-[300px] font-black number-badge">1</div>
+        <?php $count = 1; ?>
+        <?php foreach ($patches as $patch): ?>
 
-                <div class="col-span-12 md:col-span-6 md:col-start-2 z-20">
+            <section class="grid grid-cols-12 items-center gap-16 relative group">
+
+                <!-- Big number -->
+                <div class="absolute <?= $count % 2 === 0 ? '-left-50' : '-right-50' ?> top-1/2 -translate-y-1/2 text-[300px] font-black number-badge">
+                    <?= $count ?>
+                </div>
+
+                <!-- Content -->
+                <div class="col-span-12 md:col-span-6 <?= $count % 2 === 0 ? 'md:order-2 md:col-start-7' : 'md:col-start-2' ?> z-20">
+
                     <div class="flex items-center gap-4 mb-6">
-                        <span class="font-mono text-xs text-cyan-500 uppercase tracking-[0.3em]">PATCH_01</span>
+                        <span class="font-mono text-xs text-cyan-500 uppercase tracking-[0.3em]">
+                            PATCH_<?= str_pad($count, 2, '0', STR_PAD_LEFT) ?>
+                        </span>
                         <div class="h-px flex-1 bg-linear-to-r from-cyan-500/30 to-transparent"></div>
                     </div>
 
                     <h2 class="text-5xl font-bold mb-8 tracking-tight group-hover:text-cyan-400 transition-all duration-500 italic">
-                        Neural Network Optimization
+                        <?= esc($patch['patch_title']) ?>
                     </h2>
 
                     <div class="content-card p-10 relative overflow-hidden group-hover:bg-cyan-500/5 transition-all">
                         <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500/40"></div>
-                        <p class="text-gray-400 leading-relaxed text-md mb-6">Enhanced neural pathway processing with 247% efficiency gain. Quantum entanglement stabilized for multi-core operations.</p>
-                        
+
+                        <p class="text-gray-400 leading-relaxed text-md mb-6">
+                            <?= esc($patch['patch_description']) ?>
+                        </p>
+
                         <div class="flex flex-wrap gap-4 pt-6 border-t border-white/10">
-                            <span class="px-3 py-1 text-[11px] bg-green-500/20 text-green-400 border border-green-500/30 uppercase tracking-wider">v2.1.3</span>
-                            <span class="px-3 py-1 text-[11px] bg-purple-500/20 text-purple-400 border border-purple-500/30 uppercase tracking-wider">PERFORMANCE</span>
-                            <span class="px-3 py-1 text-[11px] bg-orange-500/20 text-orange-400 border border-orange-500/30 uppercase tracking-wider">JAN 2024</span>
+                            <span class="px-3 py-1 text-[11px] bg-green-500/20 text-green-400 border border-green-500/30 uppercase tracking-wider">
+                                <?= esc($patch['patch_version']) ?>
+                            </span>
+
+                            <span class="px-3 py-1 text-[11px] bg-purple-500/20 text-purple-400 border border-purple-500/30 uppercase tracking-wider">
+                                <?= strtoupper($patch['patch_type']) ?>
+                            </span>
+
+                            <span class="px-3 py-1 text-[11px] bg-orange-500/20 text-orange-400 border border-orange-500/30 uppercase tracking-wider">
+                                <?= date('M Y', strtotime($patch['patch_release'])) ?>
+                            </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-span-12 md:col-span-5 z-20">
-                    <div class="image-container group relative">
+                <!-- Visual -->
+                <div class="col-span-12 md:col-span-5 <?= $count % 2 === 0 ? 'md:order-1' : '' ?> z-20">
+                    <div class="image-container relative">
                         <div class="overflow-hidden cyber-glow rounded-xl">
-                            <div class="w-full aspect-[4/3] bg-gradient-to-br from-gray-900/80 to-gray-800/80 flex items-center justify-center border-2 border-dashed border-gray-600/50 rounded-xl">
-                                <div class="text-center">
-                                    <div class="w-16 h-16 border-2 border-cyan-500/50 border-t-cyan-500 rounded-full animate-spin mx-auto mb-4"></div>
-                                    <span class="text-gray-500 text-sm font-mono tracking-wider">PATCH VISUAL</span>
-                                </div>
+
+                            <!-- Optional: show file or placeholder -->
+                            <div class="w-full aspect-[4/3] flex items-center justify-center border-2 border-dashed border-gray-600/50 rounded-xl">
+                                <span class="text-gray-500 text-sm font-mono tracking-wider">
+                                    PATCH FILE
+                                </span>
                             </div>
+
                         </div>
-                        
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"></div>
-                        
-                        <div class="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-cyan-500"></div>
-                        <div class="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-cyan-500"></div>
-                        
                     </div>
                 </div>
+
             </section>
 
-            <!-- PATCH 2 -->
-            <section class="grid grid-cols-12 items-center gap-16 relative group">
-                <div class="absolute -left-50 top-1/2 -translate-y-1/2 text-[300px] font-black number-badge">2</div>
-
-                <div class="col-span-12 md:col-span-6 md:order-2 md:col-start-7 z-20">
-                    <div class="flex items-center gap-4 mb-6">
-                        <span class="font-mono text-xs text-cyan-500 uppercase tracking-[0.3em]">PATCH_02</span>
-                        <div class="h-px flex-1 bg-linear-to-r from-transparent to-cyan-500/30"></div>
-                    </div>
-
-                    <h2 class="text-5xl font-bold mb-8 tracking-tight group-hover:text-cyan-400 transition-all duration-500 italic">
-                        Security Matrix Upgrade
-                    </h2>
-
-                    <div class="content-card p-10 relative overflow-hidden group-hover:bg-cyan-500/5 transition-all">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500/40"></div>
-                        <p class="text-gray-400 leading-relaxed text-md mb-6">Quantum encryption protocols hardened against temporal incursions. Firewall integrity increased to 99.999%.</p>
-                        
-                        <div class="flex flex-wrap gap-4 pt-6 border-t border-white/10">
-                            <span class="px-3 py-1 text-[11px] bg-green-500/20 text-green-400 border border-green-500/30 uppercase tracking-wider">v1.9.8</span>
-                            <span class="px-3 py-1 text-[11px] bg-purple-500/20 text-purple-400 border border-purple-500/30 uppercase tracking-wider">SECURITY</span>
-                            <span class="px-3 py-1 text-[11px] bg-orange-500/20 text-orange-400 border border-orange-500/30 uppercase tracking-wider">DEC 2023</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-span-12 md:col-span-5 md:order-1 z-20">
-                    <div class="image-container group relative">
-                        <div class="overflow-hidden cyber-glow rounded-xl">
-                            <div class="w-full aspect-[4/3] bg-gradient-to-br from-emerald-900/70 to-emerald-800/70 flex items-center justify-center border-2 border-dashed border-emerald-600/50 rounded-xl">
-                                <div class="text-center">
-                                    <div class="w-16 h-16 border-2 border-emerald-500/50 border-t-emerald-500 rounded-full animate-spin mx-auto mb-4"></div>
-                                    <span class="text-emerald-400 text-sm font-mono tracking-wider">SECURE</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"></div>
-                        
-                        <div class="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-cyan-500"></div>
-                        <div class="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-cyan-500"></div>
-                        
-                    </div>
-                </div>
-            </section>
-        </div>
+            <?php $count++; ?>
+        <?php endforeach; ?>
 
         <footer class="mt-48 pt-10 border-t border-white/5 flex flex-wrap justify-between gap-6 text-gray-600 font-mono text-[9px] tracking-[0.4em]">
             <div class="flex items-center gap-2">

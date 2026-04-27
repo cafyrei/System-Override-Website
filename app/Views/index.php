@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>">
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Slackey&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('css/pages/index.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/pages/global.css') ?>">
     <title>System Override | Neural Core</title>
 </head>
 
@@ -54,7 +55,7 @@
                     <div class="logo-glow"></div>
                     <img id="parallax-logo" src="<?= base_url('images/main-logo.png') ?>" alt="Logo" class="w-full h-auto drop-shadow-[0_0_30px_rgba(0,242,255,0.3)] transition-transform duration-200">
 
-                    <div class="absolute -bottom-10 right-0 font-mono text-[9px] text-cyan-500/40 text-right space-y-1">
+                    <div class="relative -bottom-6 right-0 left-2/4 font-mono text-[9px] text-cyan-500/40 text-right space-y-1">
                         <div>LATENCY: 12ms</div>
                         <div>PACKET_LOSS: 0%</div>
                         <div>ENCRYPTION: AES_256</div>

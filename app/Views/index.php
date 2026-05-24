@@ -8,16 +8,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Slackey&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('css/pages/index.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/pages/global.css') ?>">
+    <style>
+        .home-page {
+            background:
+                linear-gradient(rgba(3, 4, 6, 0.85), rgba(3, 4, 6, 0.04)),
+                url('images/backgrounds/m-background.png') top / cover no-repeat;
+        }
+    </style>
     <title>System Override | Neural Core</title>
 </head>
 
-<body>
+<body class="home-page">
 
     <canvas id="matrix-bg"></canvas>
     <div class="cyber-grid"></div>
     <div id="dust-container" style="position:fixed; inset:0; z-index:3; pointer-events:none;"></div>
 
     <?= $this->include('partials/navbar') ?>
+
+    <?= $this->include('partials/cyber-preloader') ?>
 
     <main class="relative z-10">
         <section class="hero-section px-6 md:px-24">
@@ -65,6 +74,9 @@
         </section>
     </main>
 
+    <?= $this->include('partials/footer') ?>
+
+    <script src="<?= base_url('js/partials/loading.js') ?>"></script>
     <script src="<?= base_url('js/main/index.js') ?>"></script>
 </body>
 

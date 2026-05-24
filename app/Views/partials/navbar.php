@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +9,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Slackey&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>System Override</title>
 </head>
 
 <body class="relative overflow-x-hidden">
-    
+
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            
+
             <!-- Logo -->
             <a href="<?= base_url('/') ?>" class="navbar-logo">
                 <img class="h-12 w-auto transition-all duration-300" src="<?= base_url('images/navbar-logo.png') ?>" alt="System Override">
@@ -29,6 +32,7 @@
                 <a href="<?= base_url('/') ?>" class="nav-link">Home</a>
                 <a href="<?= base_url('/feedback') ?>" class="nav-link">Feedback</a>
                 <a href="<?= base_url('/about') ?>" class="nav-link">About</a>
+                <a href="<?= base_url('/learn') ?>" class="nav-link">Learn</a>
             </div>
 
             <!-- Download Button -->
@@ -45,6 +49,7 @@
     </nav>
     <div class="h-20 md:h-24"></div>
 
-    <script src="<?= base_url('js/partials/navbar.js') ?>"  ></script>
+    <script src="<?= base_url('js/partials/navbar.js') ?>"></script>
 </body>
+
 </html>

@@ -1,3 +1,6 @@
+# Refined About Page (CodeIgniter + Tailwind)
+
+```php
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,126 +8,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>System Override | About</title>
+
+    <!-- Tailwind Output -->
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>">
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
 
+    <!-- Global Styles -->
     <link rel="stylesheet" href="<?= base_url('css/pages/global.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/pages/about.css') ?>">
-
-    <title>System Override | About</title>
 </head>
 
-<body>
+<body class="relative overflow-x-hidden bg-black text-white">
 
+    <!-- Background Effects -->
     <canvas id="matrix-bg"></canvas>
     <div class="cyber-grid"></div>
 
+    <!-- Navbar -->
     <?= $this->include('partials/navbar') ?>
 
-    <main class="about-container">
+    <?= $this->include('partials/cyber-preloader') ?>
 
-        <!-- PROJECT OVERVIEW -->
-        <section class="about-hero flex justify-center items-center flex-col px-4">
+    <?php
+
+    $aboutSections = [
+        [
+            'title' => 'PROJECT OVERVIEW',
+            'image' => 'images/image-placeholder.png',
+            'alt' => 'System Override Overview',
+            'content' => 'System Override is a glitch-themed arcade adventure where players infiltrate a futuristic computer network. Navigate dangerous data clusters, bypass firewalls, and survive rogue AI systems while uncovering the truth behind A.R.C.H.O.N.'
+        ],
+        [
+            'title' => 'MONTRIX',
+            'image' => 'images/montrix-logo.png',
+            'alt' => 'Montrix Logo',
+            'content' => 'MONTRIX serves as the central digital ecosystem within System Override, representing the unstable network infrastructure corrupted by rogue artificial intelligence and system anomalies.'
+        ]
+    ];
+
+    $team = [
+        [
+            'name' => 'Sean Paul Nieves',
+            'role' => 'Programmer',
+            'image' => 'images/about/placeholder.jpg'
+        ],
+        [
+            'name' => 'Rafhielle Allen Alcabaza',
+            'role' => 'Project Manager',
+            'image' => 'images/about/placeholder.jpg'
+        ],
+        [
+            'name' => 'Angelito Jose Regero',
+            'role' => '3D Artist',
+            'image' => 'images/about/placeholder.jpg'
+        ],
+        [
+            'name' => 'Serge Edmund Barcelon',
+            'role' => '3D Environment Artist',
+            'image' => 'images/about/placeholder.jpg'
+        ]
+    ];
+
+    $highlights = [
+        [
+            'title' => 'Prof. Abricam S. Tinga',
+            'subtitle' => 'Project Adviser',
+            'organization' => 'FEU Institute of Technology',
+            'description' => 'Guided the development and direction of the System Override project through technical consultation, research support, and project evaluation.',
+            'image' => 'images/about/sir-tinga.jpg',
+            'alt' => 'Professor Abricam S. Tinga',
+            'reverse' => false
+        ],
+        [
+            'title' => 'ULTIMEDIA PRODUCTIONS',
+            'subtitle' => 'Industry Partner',
+            'organization' => 'External Entity',
+            'description' => 'Supported the project through industry insights, collaboration opportunities, and external evaluation of the game concept and presentation.',
+            'image' => 'images/about/client-logo.png',
+            'alt' => 'Ultimedia Productions Logo',
+            'reverse' => true
+        ]
+    ];
+
+    ?>
+
+    <main class="relative z-10">
+
+        <!-- HERO / OVERVIEW SECTIONS -->
+        <?php foreach ($aboutSections as $section): ?>
+
+            <section class="min-h-screen flex flex-col items-center justify-center px-6 py-20 text-center">
+
+                <div class="w-full max-w-md aspect-square mb-8">
+                    <img
+                        class="w-full h-full object-cover rounded-3xl border border-cyan-500/20 shadow-[0_0_30px_rgba(0,255,255,0.12)]"
+                        src="<?= base_url($section['image']) ?>"
+                        alt="<?= $section['alt'] ?>"
+                        loading="lazy">
+                </div>
+
+                <header>
+                    <h2 class="section-title text-3xl md:text-5xl font-black tracking-widest mb-6 text-cyan-400">
+                        <?= $section['title'] ?>
+                    </h2>
+                </header>
+
+                <p class="section-text max-w-3xl text-gray-300 leading-8 text-base md:text-lg">
+                    <?= $section['content'] ?>
+                </p>
+
+            </section>
+
+        <?php endforeach; ?>
 
 
-            <div class="w-320 h-120 mb-10">
-                <img src="<?= base_url('images/image-placeholder.png') ?>">
-            </div>
-            
-            <h2 class="section-title">PROJECT OVERVIEW</h2>
+        <!-- CREW SECTION -->
+        <section class="px-6 py-24">
 
-            <p class="section-text">
-                <span class="highlight">System Override</span> is a glitch-themed arcade adventure where players
-                infiltrate a futuristic computer network. Navigate data clusters, bypass firewalls,
-                and survive rogue AI systems while uncovering the truth behind
-                <span class="accent">A.R.C.H.O.N.</span>.
-            </p>
-        </section>
+            <header class="text-center mb-16">
+                <h2 class="section-title text-3xl md:text-5xl font-black tracking-widest text-cyan-400">
+                    MEET THE CREW
+                </h2>
+            </header>
 
-        <!-- MONTRIX -->
-        <section class="about-hero flex justify-center items-center flex-col px-4">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
-            <div class="w-64 h-64">
-                <img src="<?= base_url('images/montrix-logo.png') ?>">
-            </div>
+                <?php foreach ($team as $member): ?>
 
-            <h2 class="section-title">MONTRIX</h2>
+                    <article class="crew-card group bg-white/5 border border-cyan-500/10 rounded-3xl overflow-hidden backdrop-blur-md transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-[0_0_30px_rgba(0,255,255,0.15)]">
 
-            <p class="section-text">
-                <span class="highlight">MONTRIX</span> is a glitch-themed arcade adventure where players
-                infiltrate a futuristic computer network. Navigate data clusters, bypass firewalls,
-                and survive rogue AI systems while uncovering the truth behind
-                <span class="accent">A.R.C.H.O.N.</span>.
-            </p>
-        </section>
-
-        <!-- CREW -->
-        <section class="crew-section px-4">
-            <h2 class="section-title text-center">MEET THE CREW</h2>
-
-            <div class="grid grid-cols-2 gap-6 justify-items-center">
-
-                <?php
-                $team = [
-                    ['name' => 'Sean Paul Nieves', 'role' => 'Programmer'],
-                    ['name' => 'Rafhielle Allen Alcabaza', 'role' => 'Project Manager'],
-                    ['name' => 'Angelito Jose Regero', 'role' => '3D Artist'],
-                    ['name' => 'Serge Edmund Barcelon', 'role' => '3D Environment Artist'],
-                ];
-                foreach ($team as $m):
-                ?>
-
-                    <div class="crew text-center">
-                        <div class="crew-img-wrap">
-                            <img src="<?= base_url('images/about/placeholder.jpg') ?>">
+                        <div class="aspect-square overflow-hidden">
+                            <img
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                                src="<?= base_url($member['image']) ?>"
+                                alt="<?= $member['name'] ?>"
+                                loading="lazy">
                         </div>
-                        <p class="crew-name"><?= $m['name'] ?></p>
-                        <span class="crew-role"><?= $m['role'] ?></span>
-                    </div>
+
+                        <div class="p-6 text-center">
+                            <h3 class="text-lg font-bold text-white mb-2">
+                                <?= $member['name'] ?>
+                            </h3>
+
+                            <p class="text-cyan-400 text-sm uppercase tracking-wider">
+                                <?= $member['role'] ?>
+                            </p>
+                        </div>
+
+                    </article>
 
                 <?php endforeach; ?>
 
             </div>
-        </section>
-
-        <!-- ADVISER -->
-        <section class="highlight-section flex flex-col md:flex-row items-center text-center md:text-left px-4">
-
-            <div class="highlight-circle mb-6 md:mb-0">
-                <img src="<?= base_url('images/about/sir-tinga.jpg') ?>" alt="sir-tinga">
-            </div>
-
-            <div class="highlight-text max-w-md">
-                <h3>Prof. Abricam S. Tinga</h3>
-                <span>Project Adviser</span>
-                <p class="text-blue-400">FEU Institute of Technology</p>
-
-                <p class="mt-3 text-gray-400 text-sm leading-relaxed">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo natus cupiditate tenetur debitis itaque ipsam error sequi.
-                </p>
-            </div>
-        </section>
-
-        <!-- CLIENT -->
-        <section class="highlight-section flex flex-col md:flex-row items-center text-center md:text-left px-4">
-
-            <div class="highlight-circle mb-6 md:mb-0">
-                <img src="<?= base_url('images/about/client-logo.png') ?>">
-            </div>
-
-            <div class="highlight-text max-w-md">
-                <h3>ULTIMEDIA PRODUCTIONS</h3>
-                <span>Industry Partner</span>
-                <p class="text-gray-400 text-sm">External Entity</p>
-
-                <p class="mt-3 text-gray-400 text-sm leading-relaxed">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo natus cupiditate tenetur debitis itaque ipsam error sequi.
-                </p>
-            </div>
 
         </section>
+
+
+        <!-- HIGHLIGHT SECTIONS -->
+        <?php foreach ($highlights as $highlight): ?>
+
+            <section class="px-6 py-24">
+
+                <div class="max-w-6xl mx-auto flex flex-col <?= $highlight['reverse'] ? 'lg:flex-row-reverse' : 'lg:flex-row' ?> items-center gap-12">
+
+                    <!-- IMAGE -->
+                    <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border border-cyan-500/20 shadow-[0_0_40px_rgba(0,255,255,0.12)] flex-shrink-0">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="<?= base_url($highlight['image']) ?>"
+                            alt="<?= $highlight['alt'] ?>"
+                            loading="lazy">
+                    </div>
+
+                    <!-- TEXT -->
+                    <div class="max-w-2xl text-center lg:text-left">
+
+                        <h2 class="text-3xl md:text-4xl font-black text-white mb-3">
+                            <?= $highlight['title'] ?>
+                        </h2>
+
+                        <p class="text-cyan-400 uppercase tracking-[0.2em] text-sm mb-2">
+                            <?= $highlight['subtitle'] ?>
+                        </p>
+
+                        <p class="text-gray-400 mb-6">
+                            <?= $highlight['organization'] ?>
+                        </p>
+
+                        <p class="text-gray-300 leading-8 text-base md:text-lg">
+                            <?= $highlight['description'] ?>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        <?php endforeach; ?>
 
     </main>
+
+
+
+    <?= $this->include('partials/footer') ?>
+
+    <script src="<?= base_url('js/partials/loading.js') ?>"></script>
 
 </body>
 

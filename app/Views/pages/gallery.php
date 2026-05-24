@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/pages/gallery.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/pages/global.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/pages/patches.css') ?>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <title>System Override | Gallery</title>
 </head>
@@ -19,6 +19,8 @@
     <div class="dust-field" id="dust-container" style="position:fixed; inset:0; z-index:4; pointer-events:none;"></div>
 
     <?= $this->include('partials/navbar') ?>
+
+    <?= $this->include('partials/cyber-preloader') ?>
 
     <main class="relative z-10 max-w-7xl mx-auto px-6 py-20">
         <div class="relative border-l-4 border-cyan-500 pl-10 mb-40">
@@ -85,6 +87,10 @@
         </footer>
     </main>
 
+
+    <?= $this->include('partials/footer') ?>
+
+    <script src="<?= base_url('js/partials/loading.js') ?>"></script>
     <script src="<?= base_url('js/main/gallery.js') ?>"></script>
 </body>
 

@@ -25,8 +25,14 @@ $routes->post('admin/gallery/delete/(:num)', 'Admin\Pages\AdminGallery::delete/$
 // About 
 $routes->get('about', 'Pages\About::about');     
 
+// Learn
+$routes->get('learn', 'Pages\Learn::learn');     
 
 // Patches
 $routes->get('patches', 'Pages\Patches::fetch');
 $routes->post('patches/patches/upload', 'Admin\Pages\AdminPatch::upload');
 $routes->get('patches/patches/delete/(:num)', 'Admin\Pages\AdminPatch::delete/$1');
+
+
+// Animation routes
+$routes->get('animations/cyber_preloader', 'Pages\AnimationController::cyber_preloader');

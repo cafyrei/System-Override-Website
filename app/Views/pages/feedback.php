@@ -19,6 +19,9 @@
 
     <?= $this->include('partials/navbar') ?>
 
+    <?= $this->include('partials/cyber-preloader') ?>
+
+
     <main class="relative z-10 h-[calc(100vh-80px)] flex flex-col items-center justify-center px-6">
 
         <header class="text-center mb-10">
@@ -79,6 +82,10 @@
         </footer>
 
     </main>
+
+    <?= $this->include('partials/footer') ?>
+
+    <script src="<?= base_url('js/partials/loading.js') ?>"></script>
     <script src="<?= base_url('js/main/feedback.js') ?>"></script>
 </body>
 

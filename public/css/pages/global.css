@@ -6,7 +6,6 @@
 }
 
 body {
-  font-family: "JetBrains Mono", monospace;
   background: var(--dark-bg);
   color: white;
   margin: 0;

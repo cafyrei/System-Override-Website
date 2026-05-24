@@ -18,6 +18,8 @@
 
     <?= $this->include('partials/navbar') ?>
 
+    <?= $this->include('partials/cyber-preloader') ?>
+
     <main class="relative z-10 max-w-7xl mx-auto px-6 py-20">
         <div class="relative border-l-4 border-cyan-500 pl-10 mb-40">
             <span class="inline-block px-3 py-1 mb-4 text-[10px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 uppercase tracking-[0.4em]">
@@ -110,6 +112,9 @@
         </footer>
     </main>
 
+    <?= $this->include('partials/footer') ?>
+
+    <script src="<?= base_url('js/partials/loading.js') ?>"></script>
 </body>
 
 </html>

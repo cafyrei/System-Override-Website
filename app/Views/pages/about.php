@@ -100,9 +100,15 @@
         <!-- HERO / OVERVIEW SECTIONS -->
         <?php foreach ($aboutSections as $section): ?>
 
-            <section class="min-h-screen flex flex-col items-center justify-center px-6 py-20 text-center">
+            <section class="min-h-[75vh] lg:min-h-screen flex flex-col items-center justify-center px-6 py-12 text-center max-w-5xl mx-auto">
 
-                <div class="w-full max-w-md aspect-square mb-8">
+                <header>
+                    <h2 class="section-title text-3xl md:text-5xl font-black tracking-widest mb-4 text-cyan-400">
+                        <?= $section['title'] ?>
+                    </h2>
+                </header>
+
+                <div class="w-full max-w-sm aspect-video sm:aspect-[2/1] md:max-w-md md:h-32 mb-8 shrink-0 overflow-hidden">
                     <img
                         class="w-full h-full object-cover rounded-3xl border border-cyan-500/20 shadow-[0_0_30px_rgba(0,255,255,0.12)]"
                         src="<?= base_url($section['image']) ?>"
@@ -110,13 +116,7 @@
                         loading="lazy">
                 </div>
 
-                <header>
-                    <h2 class="section-title text-3xl md:text-5xl font-black tracking-widest mb-6 text-cyan-400">
-                        <?= $section['title'] ?>
-                    </h2>
-                </header>
-
-                <p class="section-text max-w-3xl text-gray-300 leading-8 text-base md:text-lg">
+                <p class="section-text max-w-2xl text-gray-300 leading-relaxed text-sm md:text-base">
                     <?= $section['content'] ?>
                 </p>
 

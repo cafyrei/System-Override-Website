@@ -19,7 +19,7 @@
 
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="container mx-auto px-6 py-1 flex justify-between items-center">
 
             <!-- Logo -->
             <a href="<?= base_url('/') ?>" class="navbar-logo">

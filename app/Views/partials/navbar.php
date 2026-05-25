@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="<?= base_url('Override.png'); ?>" sizes="32x32">
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/partials/navbar.css') ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,20 +26,21 @@
                 <img class="h-12 w-auto transition-all duration-300" src="<?= base_url('images/navbar-logo.png') ?>" alt="System Override">
             </a>
 
-            <!-- Desktop Links -->
-            <div class="hidden md:flex items-center space-x-2">
-                <a href="<?= base_url('/patches') ?>" class="nav-link">Patches</a>
-                <a href="<?= base_url('/gallery') ?>" class="nav-link">Gallery</a>
-                <a href="<?= base_url('/') ?>" class="nav-link">Home</a>
-                <a href="<?= base_url('/feedback') ?>" class="nav-link">Feedback</a>
-                <a href="<?= base_url('/about') ?>" class="nav-link">About</a>
-                <a href="<?= base_url('/learn') ?>" class="nav-link">Learn</a>
-            </div>
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center gap-4">
 
-            <!-- Download Button -->
-            <a href="#" class="download-btn px-8 py-3 rounded-full text-sm font-bold shadow-lg">
-                Download Now
-            </a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-8 justify-center flex-1">
+                    <a href="<?= base_url('/patches') ?>" class="nav-link">Patches</a>
+                    <a href="<?= base_url('/gallery') ?>" class="nav-link">Gallery</a>
+                    <a href="<?= base_url('/') ?>" class="nav-link">Home</a>
+                    <a href="<?= base_url('/feedback') ?>" class="nav-link">Feedback</a>
+                    <a href="<?= base_url('/about') ?>" class="nav-link">About</a>
+                    <a href="<?= base_url('/learn') ?>" class="nav-link">Learn</a>
+                </div>
+
+                <a href="#" class="download-btn shrink-0 px-6 lg:px-8 py-3 rounded-full text-sm font-bold shadow-lg">
+                    Download Now
+                </a>
+            </div>
 
             <button class="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-all">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

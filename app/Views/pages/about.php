@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="icon" type="image/x-icon" href="<?= base_url('Override.png'); ?>" sizes="32x32">
     <title>System Override | About</title>
 
     <!-- Tailwind Output -->
@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="<?= base_url('css/pages/about.css') ?>">
 </head>
 
-<body class="relative overflow-x-hidden bg-black text-white">
+<body class="relative overflow-x-hidden bg-black text-white" data-audio="<?= base_url('./audio/override-sfx-starlight-horizon.mp3') ?>">
 
     <!-- Background Effects -->
     <canvas id="matrix-bg"></canvas>
@@ -217,6 +217,7 @@
     <?= $this->include('partials/footer') ?>
 
     <script src="<?= base_url('js/partials/loading.js') ?>"></script>
+    <script src="<?= base_url('js/partials/audio-manager.js') ?>"></script>
 
 </body>
 

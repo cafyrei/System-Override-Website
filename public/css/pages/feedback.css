@@ -27,3 +27,13 @@
   border-color: var(--cyan);
   outline: none;
 }
+
+.cyber-input option {
+  background-color: #0c0d12 !important;
+  color: #00f2ff !important; 
+  padding: 12px; 
+}
+
+.cyber-input option:disabled {
+  color: rgba(255, 255, 255, 0.3) !important;
+}

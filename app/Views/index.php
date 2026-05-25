@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= base_url('css/output.css') ?>">
+    <link rel="icon" type="image/x-icon" href="<?= base_url('Override.png'); ?>" sizes="32x32">
+    <link rel="stylesheet" href="<?= base_url('css/output.css') ?>" sizes="32x32">
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Slackey&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('css/pages/index.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/pages/global.css') ?>">
@@ -18,7 +19,7 @@
     <title>System Override | Neural Core</title>
 </head>
 
-<body class="home-page">
+<body class="home-page" data-audio="<?= base_url('./audio/override-sfx-zenith-protocol.MP3') ?>">
 
     <canvas id="matrix-bg"></canvas>
     <div class="cyber-grid"></div>
@@ -28,7 +29,7 @@
 
     <?= $this->include('partials/cyber-preloader') ?>
 
-    <main class="relative z-10">
+    <main class="relative z-10 w-full overflow-hidden">
         <section class="hero-section px-6 md:px-24">
             <div class="container mx-auto grid lg:grid-cols-2 gap-12 items-center">
 
@@ -78,6 +79,7 @@
 
     <script src="<?= base_url('js/partials/loading.js') ?>"></script>
     <script src="<?= base_url('js/main/index.js') ?>"></script>
+    <script src="<?= base_url('js/partials/audio-manager.js') ?>"></script>
 </body>
 
 </html>

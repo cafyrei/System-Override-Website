@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="<?= base_url('Override.png'); ?>" sizes="32x32">
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/pages/patches.css') ?>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <title>System Override | Patches</title>
 </head>
 
-<body class="text-white">
+<body class="text-white" data-audio="<?= base_url('./audio/override-sfx-adsion-protocol.mp3') ?>">
     <div class="stars"></div>
     <canvas id="matrix-bg"></canvas>
     <div class="cyber-grid"></div>
@@ -115,6 +116,7 @@
     <?= $this->include('partials/footer') ?>
 
     <script src="<?= base_url('js/partials/loading.js') ?>"></script>
+    <script src="<?= base_url('js/partials/audio-manager.js') ?>"></script>
 </body>
 
 </html>

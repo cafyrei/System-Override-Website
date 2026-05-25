@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="<?= base_url('Override.png'); ?>" sizes="32x32">
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/pages/feedback.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/pages/global.css') ?>">
@@ -11,7 +12,7 @@
     <title>System Override | Feedback Terminal</title>
 </head>
 
-<body class="text-white h-screen">
+<body class="text-white h-screen" data-audio="<?= base_url('./audio/override-sfx-adsion-protocol.mp3') ?>">
 
     <canvas id="matrix-bg"></canvas>
     <div class="cyber-grid"></div>
@@ -42,10 +43,10 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-[9px] text-cyan-500/60 uppercase tracking-widest mb-2 font-bold">// Packet_Type</label>
-                        <select name="feedback_type" class="cyber-input w-full h-11 px-4 text-xs rounded-sm appearance-none">
-                            <option value="" disabled selected>Select Protocol</option>
-                            <option value="suggestion">Optimization Suggestion</option>
-                            <option value="bug_report">Glitch Report</option>
+                        <select name="feedback_type" class="cyber-input w-full h-11 px-4 text-xs rounded-sm appearance-none text-black bg-transparent">
+                            <option value="" class="text-black bg-white" disabled selected>Select Protocol</option>
+                            <option value="suggestion" class="text-black bg-white">Optimization Suggestion</option>
+                            <option value="bug_report" class="text-black bg-white">Glitch Report</option>
                         </select>
                     </div>
                     <div>
@@ -87,6 +88,7 @@
 
     <script src="<?= base_url('js/partials/loading.js') ?>"></script>
     <script src="<?= base_url('js/main/feedback.js') ?>"></script>
+    <script src="<?= base_url('js/partials/audio-manager.js') ?>"></script>
 </body>
 
 </html>

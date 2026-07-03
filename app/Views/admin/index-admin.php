@@ -59,8 +59,13 @@
             <header class="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-8">
                 <h1 id="page-title" class="text-xl font-bold text-gray-800">Dashboard Overview</h1>
                 <div class="flex items-center gap-4">
-                    <button class="text-gray-500 hover:text-blue-600 transition"><i class="fas fa-bell"></i></button>
-                    <button class="bg-red-50 text-red-600 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-red-100 transition">Logout</button>
+                    <button class="text-gray-500 hover:text-blue-600 transition">
+                        <i class="fas fa-bell"></i>
+                    </button>
+
+                    <a href="<?= site_url('admin/logout') ?>" class="bg-red-50 text-red-600 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-red-100 transition inline-flex items-center">
+                        Logout
+                    </a>
                 </div>
             </header>
 

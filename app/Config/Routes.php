@@ -7,32 +7,31 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Pages\Home::index');
 
-// Routes for each page
-// $routes->get('/about', 'Pages\Patches::about');
+// Public Pages Context
+$routes->get('about', 'Pages\About::about');
+$routes->get('learn', 'Pages\Learn::learn');
 $routes->get('gallery', 'Pages\Gallery::fetch');
+$routes->get('patches', 'Pages\Patches::fetch');
 
-// Feedback
-$routes->get('feedback', 'Pages\Feedback::feedback');        
-$routes->post('admin/feedback/delete_feedback', 'Admin\Admin::delete_feedback');
-$routes->post('admin/feedback/mark_reviewed', 'Admin\Admin::mark_reviewed');
+// Public Feedback Submission
+$routes->get('feedback', 'Pages\Feedback::feedback');
 $routes->post('feedback/send_feedback', 'Pages\Feedback::send_feedback');
 
-// Admin routes
+// Admin Auth Handling
+$routes->get('admin-login', 'Admin\Admin::adminlogin');
+$routes->post('admin/login/authenticate', 'Admin\Admin::authenticate');
+$routes->get('admin/logout', 'Admin\Admin::logout');
+
+// Protected Admin Dashboard Context & Management Actions
 $routes->get('admin', 'Admin\Admin::admin');
+$routes->post('admin/feedback/delete_feedback', 'Admin\Admin::delete_feedback');
+$routes->post('admin/feedback/mark_reviewed', 'Admin\Admin::mark_reviewed');
 $routes->post('admin/gallery/upload', 'Admin\Pages\AdminGallery::upload');
 $routes->post('admin/gallery/delete/(:num)', 'Admin\Pages\AdminGallery::delete/$1');
 
-// About 
-$routes->get('about', 'Pages\About::about');     
-
-// Learn
-$routes->get('learn', 'Pages\Learn::learn');     
-
-// Patches
-$routes->get('patches', 'Pages\Patches::fetch');
+// Protected Admin Patch Actions
 $routes->post('patches/patches/upload', 'Admin\Pages\AdminPatch::upload');
 $routes->get('patches/patches/delete/(:num)', 'Admin\Pages\AdminPatch::delete/$1');
 
-
-// Animation routes
+// Animation Routes
 $routes->get('animations/cyber_preloader', 'Pages\AnimationController::cyber_preloader');

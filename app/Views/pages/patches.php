@@ -36,6 +36,7 @@
         </div>
 
         <?php $count = 1; ?>
+
         <?php foreach ($patches as $patch): ?>
 
             <section class="grid grid-cols-12 items-center gap-16 relative group">
@@ -89,7 +90,13 @@
 
                             <!-- Optional: show file or placeholder -->
                             <div class="w-full aspect-[4/3] flex items-center justify-center border-2 border-dashed border-gray-600/50 rounded-xl">
-                                <span class="text-gray-500 text-sm font-mono tracking-wider">
+
+                                <img src="<?= base_url($patch['patch_path']) ?>"
+                                    alt="<?= esc($patch['patch_title']) ?>"
+                                    class="w-full aspect-[4/3] object-cover grayscale-[40%] group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100 z-0 absolute"
+                                    loading="lazy">
+
+                                <span class="text-gray-500 text-sm font-mono tracking-wider z-1 absolute">
                                     PATCH FILE
                                 </span>
                             </div>

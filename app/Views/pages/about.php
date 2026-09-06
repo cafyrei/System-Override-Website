@@ -91,13 +91,13 @@
 
         [
             'name' => 'Angelito Jose Regero',
-            'role' => '2D Artist',
+            'role' => '2D Cutscene Artist',
 
             'image' => 'images/about/regero.jpg',
             'hoverImage' => 'images/about/regero_hover.jpg',
 
             'details' => [
-                'Game Cutscenes',
+                'Game Cutscene Drawing',
             ],
 
             'bio' => 'Responsible for creating Cutscenes throughout the game.'
@@ -111,7 +111,7 @@
             'hoverImage' => 'images/about/barcelon_serge_Hover.jpg',
 
             'details' => [
-                'Designed game environments',
+                'Helped design game environments',
             ],
 
             'bio' => 'Focused on building the digital environments and atmosphere of System Override.'

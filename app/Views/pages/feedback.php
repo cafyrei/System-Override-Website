@@ -71,7 +71,7 @@
                         <span class="group-hover:text-cyan-400 transition-colors">Authorize Encryption</span>
                     </label>
 
-                    <button type="submit" class="transmit-btn w-full md:w-auto px-12 py-3 text-[10px] rounded-sm">
+                    <button type="submit" class="transmit-btn w-full md:w-auto px-12 py-3 text-[10px] rounded-sm bg-cyan-500/20">
                         Initiate_Transmit
                     </button>
                 </div>

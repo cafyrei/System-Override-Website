@@ -1,68 +1,166 @@
-# CodeIgniter 4 Application Starter
+# System Override
 
-## What is CodeIgniter?
+System Override is a cyberpunk-themed game community website built with CodeIgniter 4. It provides public pages for game information, patch notes, screenshots, and player feedback, plus a session-protected dashboard for managing patches, gallery items, and feedback.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## What it is for
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+This project gives a game team one place to communicate with its community. Players can learn about the game, see released updates and screenshots, and submit suggestions or bug reports. Administrators can then review player feedback and publish or update the patch and gallery content without editing the site files directly.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Features
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- Public home, About, Learn, Patches, Gallery, and Feedback pages
+- Patch-note listing with downloadable/uploaded patch assets
+- Screenshot gallery
+- Validated player feedback form for suggestions and bug reports
+- Admin dashboard to manage patches and gallery entries, and review or delete feedback
+- Responsive styling built with Tailwind CSS and project-specific CSS/JavaScript
+- Background audio and interface animations
 
-## Installation & updates
+## Stack
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+- PHP 8.1+
+- CodeIgniter 4
+- MySQL/MariaDB via MySQLi
+- Tailwind CSS 4
+- PHPUnit 10
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## Requirements
 
-## Setup
+- PHP 8.1 or later with `intl`, `mbstring`, `json`, `mysqlnd`, and `curl` enabled
+- Composer
+- Node.js and npm (only needed when rebuilding CSS)
+- MySQL or MariaDB
+- A web server configured to serve the `public/` directory
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+## Getting started
 
-## Important Change with index.php
+1. Install PHP dependencies:
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+   ```bash
+   composer install
+   ```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+2. Install frontend dependencies:
 
-**Please** read the user guide for a better explanation of how CI4 works!
+   ```bash
+   npm install
+   ```
 
-## Repository Management
+3. Create your local environment file from the example:
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+   ```bash
+   copy env .env
+   ```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+   On macOS/Linux, use `cp env .env` instead.
 
-## Server Requirements
+4. Set `CI_ENVIRONMENT`, `app.baseURL`, and the `database.default.*` values in `.env`. For example:
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+   ```ini
+   CI_ENVIRONMENT = development
+   app.baseURL = 'http://localhost/system-override/public/'
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+   database.default.hostname = localhost
+   database.default.database = system-override
+   database.default.username = root
+   database.default.password =
+   database.default.DBDriver = MySQLi
+   ```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+5. Create the database and its tables. This project currently has no application migrations, so create the schema with your database tool:
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+   ```sql
+   CREATE DATABASE `system-override` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+   USE `system-override`;
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+   CREATE TABLE `game_patches` (
+     `patch_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+     `patch_path` VARCHAR(255) NOT NULL,
+     `patch_title` VARCHAR(255) NOT NULL,
+     `patch_description` TEXT NOT NULL,
+     `patch_version` VARCHAR(100) NOT NULL,
+     `patch_type` VARCHAR(100) NOT NULL,
+     `patch_release` DATE NOT NULL,
+     PRIMARY KEY (`patch_id`)
+   );
+
+   CREATE TABLE `gallery` (
+     `gallery_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+     `image_path` VARCHAR(255) NOT NULL,
+     `gallery_title` VARCHAR(255) NOT NULL,
+     `gallery_description` TEXT NOT NULL,
+     PRIMARY KEY (`gallery_id`)
+   );
+
+   CREATE TABLE `user_feedback` (
+     `feedback_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+     `username` VARCHAR(50) NOT NULL,
+     `feedback_type` ENUM('suggestion', 'bug_report') NOT NULL,
+     `comment` TEXT NOT NULL,
+     `email` VARCHAR(255) NOT NULL,
+     `status` VARCHAR(50) NOT NULL DEFAULT 'unread',
+     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     PRIMARY KEY (`feedback_id`)
+   );
+   ```
+
+6. Make sure PHP can write to `writable/` and that the web server can write to `public/uploads/gallery/` and `public/uploads/patches/` when administrators upload content.
+
+7. Run the local server:
+
+   ```bash
+   php spark serve
+   ```
+
+   Open the URL printed by CodeIgniter (normally `http://localhost:8080`). If using Apache/XAMPP, configure the document root to this repository's `public/` directory.
+
+## Frontend development
+
+Rebuild Tailwind CSS while editing view templates:
+
+```bash
+npm run dev
+```
+
+The command watches `public/input.css` and writes the generated stylesheet to `public/css/output.css`.
+
+## Routes
+
+| Path | Purpose |
+| --- | --- |
+| `/` | Home page and recent unread feedback |
+| `/about` | Team/about page |
+| `/learn` | Game learning page |
+| `/patches` | Published patches |
+| `/gallery` | Screenshot gallery |
+| `/feedback` | Feedback form |
+| `/admin-login` | Administrator sign-in |
+| `/admin` | Dashboard for feedback, gallery, and patches |
+
+## Tests
+
+Run the PHPUnit suite with:
+
+```bash
+composer test
+```
+
+## Project layout
+
+```text
+app/                 Controllers, models, views, and CodeIgniter configuration
+public/              Web root, compiled CSS, JavaScript, images, audio, and uploads
+public/uploads/      Admin-managed gallery and patch assets
+writable/            Logs, sessions, cache, and other runtime files
+tests/               PHPUnit tests
+```
+
+## Security notes
+
+- Keep `.env` private; it is intentionally ignored by Git.
+- The current administrator authentication is implemented directly in `app/Controllers/Admin/Admin.php`. Before deploying, replace the hard-coded credentials with securely hashed, environment-based credentials or a proper user/authentication system.
+- Use HTTPS and a production database account with only the permissions the application needs.
+
+## License
+
+This project is distributed under the [MIT License](LICENSE).

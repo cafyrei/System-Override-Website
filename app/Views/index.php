@@ -29,7 +29,7 @@
     <?= $this->include('partials/cyber-preloader') ?>
 
     <main class="relative z-10 w-full overflow-hidden">
-        
+
         <section class="hero-section px-6 md:px-24">
             <div class="container mx-auto grid lg:grid-cols-2 gap-12 items-center">
 
@@ -63,9 +63,9 @@
 
                 <div class="hero-video-container relative group w-full">
                     <div class="absolute -inset-2 rounded-3xl bg-gradient-to-r via-blue-500/20 to-cyan-500/20 blur-2xl opacity-30 group-hover:opacity-60 transition-all duration-700"></div>
-                    
+
                     <div class="absolute inset-0 pointer-events-none rounded-2xl opacity-10 z-30"
-                         style="background:repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0,255,255,.15) 4px);">
+                        style="background:repeating-linear-gradient(to bottom, transparent 0px, transparent 3px, rgba(0,255,255,.15) 4px);">
                     </div>
 
                     <div id="trailer-frame" class="relative overflow-hidden border border-cyan-500/40 bg-black backdrop-blur-md shadow-[0_0_40px_rgba(0,242,255,.15)]">
@@ -76,12 +76,13 @@
 
                         <div class="pt-10">
                             <div class="relative aspect-video">
-                                <iframe class="absolute inset-0 w-full h-full"
-                                        src="https://www.youtube.com/embed/i4AUex3_jCg"
-                                        title="Trailer"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen>
+                                <iframe
+                                    id="trailer-iframe"
+                                    class="absolute inset-0 w-full h-full"
+                                    src="https://www.youtube.com/embed/i4AUex3_jCg?enablejsapi=1"
+                                    title="Trailer"
+                                    frameborder="0"
+                                    allowfullscreen>
                                 </iframe>
                             </div>
                         </div>
@@ -246,6 +247,9 @@
     <script src="<?= base_url('js/partials/loading.js') ?>"></script>
     <script src="<?= base_url('js/main/index.js') ?>"></script>
     <script src="<?= base_url('js/partials/audio-manager.js') ?>"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    
 </body>
 
 </html>

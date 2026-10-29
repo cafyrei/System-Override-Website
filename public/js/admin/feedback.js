@@ -126,18 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
     animateStaggerIn(detailElements);
   };
 
-  // API Helper
-  const apiCall = async (url, data) => {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    const json = await res.json();
-    if (!json.success) throw new Error(json.message || "Request failed");
-    return json;
-  };
-
   // Single Click Handler (FIXED - Selection works perfectly)
   document.addEventListener("click", (e) => {
 
@@ -209,9 +197,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ELEMENTS.btn.disabled = true;
 
     try {
-      await apiCall(window.markReviewedUrl, {
-        id: selectedFeedback.dataset.id,
-      });
+      await adminPost(
+        `${window.ADMIN.feedbackUrl}/${selectedFeedback.dataset.id}/reviewed`,
+      );
 
       ELEMENTS.btn.innerHTML = '<i class="fas fa-check mr-2"></i>Reviewed!';
       ELEMENTS.btn.style.backgroundColor = "#10b981";
@@ -254,9 +242,9 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Deleting...';
 
     try {
-      await apiCall(window.deleteFeedbackUrl, {
-        id: selectedFeedback.dataset.id,
-      });
+      await adminPost(
+        `${window.ADMIN.feedbackUrl}/${selectedFeedback.dataset.id}/delete`,
+      );
 
       // Animate removal
       selectedFeedback.style.transition =

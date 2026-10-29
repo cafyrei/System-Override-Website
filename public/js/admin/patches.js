@@ -47,30 +47,11 @@ document
     const patchId = document.getElementById("edit-patch-id").value;
     const patchTitle = document.getElementById("patch-title").value;
 
-    if (
-      patchId &&
-      confirm(`Are you sure you want to delete "${patchTitle}"?`)
-    ) {
-      const finalUrl = DELETE_PATCH_BASE_URL + patchId;
-
-      console.log("Attempting to delete ID:", patchId);
-      console.log("Full URL:", finalUrl);
-
-      fetch(finalUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            window.location.reload();
-          } else {
-            alert(
-              "Failed to delete the patch: " +
-                (data.message || "Unknown error"),
-            );
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("An error occurred. Check the console for details.");
-        });
+    if (!patchId || !confirm(`Are you sure you want to delete "${patchTitle}"?`)) {
+      return;
     }
+
+    adminPost(`${window.ADMIN.patchesUrl}/${patchId}/delete`)
+      .then(() => window.location.reload())
+      .catch((error) => alert("Failed to delete the patch: " + error.message));
   });

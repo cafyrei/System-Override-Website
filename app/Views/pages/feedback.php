@@ -38,7 +38,22 @@
 
         <div class="terminal-panel w-full max-w-xl p-8 md:p-12 rounded-sm">
 
-            <form action="<?= base_url('feedback/send_feedback') ?>" method="post" class="space-y-6">
+            <?php if (session()->getFlashdata('success')) : ?>
+                <div class="mb-6 border border-cyan-500/40 bg-cyan-500/10 text-cyan-300 text-xs font-mono uppercase tracking-widest p-4 rounded-sm">
+                    // <?= esc(session()->getFlashdata('success')) ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (session()->getFlashdata('errors')) : ?>
+                <div class="mb-6 border border-red-500/40 bg-red-500/10 text-red-300 text-xs font-mono p-4 rounded-sm space-y-1">
+                    <?php foreach ((array) session()->getFlashdata('errors') as $error) : ?>
+                        <p>// ERR: <?= esc($error) ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+            <form action="<?= site_url('feedback') ?>" method="post" class="space-y-6">
+                <?= csrf_field() ?>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>

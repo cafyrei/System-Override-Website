@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <?= csrf_meta() ?>
     <title>Game Admin Master Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="<?= base_url('css/output.css') ?>" />
@@ -63,14 +64,35 @@
                         <i class="fas fa-bell"></i>
                     </button>
 
-                    <a href="<?= site_url('admin/logout') ?>" class="bg-red-50 text-red-600 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-red-100 transition inline-flex items-center">
-                        Logout
-                    </a>
+                    <form action="<?= site_url('admin/logout') ?>" method="post">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="bg-red-50 text-red-600 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-red-100 transition inline-flex items-center">
+                            Logout
+                        </button>
+                    </form>
                 </div>
             </header>
 
             <main class="flex-1 overflow-y-auto p-8">
                 <div class="max-w-5xl mx-auto">
+                    <?php if (session()->getFlashdata('success')) : ?>
+                        <div class="mb-6 rounded-lg border border-green-200 bg-green-50 text-green-800 text-sm p-4">
+                            <?= esc(session()->getFlashdata('success')) ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (session()->getFlashdata('error')) : ?>
+                        <div class="mb-6 rounded-lg border border-red-200 bg-red-50 text-red-800 text-sm p-4">
+                            <?= esc(session()->getFlashdata('error')) ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (session()->getFlashdata('errors')) : ?>
+                        <div class="mb-6 rounded-lg border border-red-200 bg-red-50 text-red-800 text-sm p-4 space-y-1">
+                            <?php foreach ((array) session()->getFlashdata('errors') as $error) : ?>
+                                <p><?= esc($error) ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
                     <section id="dashboard" class="admin-section space-y-6">
                         <div class="flex flex-col lg:flex-row gap-6">
                             <div class="flex-1 space-y-6">
@@ -125,7 +147,7 @@
                                     <?php if (!empty($patches_data)) : ?>
                                         <?php foreach ($patches_data as $patch): ?>
                                             <div class="patch-list-item bg-white p-4 rounded-xl border border-gray-200 cursor-pointer hover:border-blue-500 transition shadow-sm group relative"
-                                                onclick="editPatch(<?= htmlspecialchars(json_encode($patch)) ?>)">
+                                                onclick="editPatch(<?= esc(json_encode($patch), 'attr') ?>)">
 
                                                 <div class="flex justify-between items-start mb-1">
                                                     <span class="text-xs font-black px-2 py-0.5 rounded bg-blue-100 text-blue-700 uppercase">
@@ -166,8 +188,9 @@
                                 </div>
 
                                 <form method="post" enctype="multipart/form-data" id="patchForm"
-                                    action="<?= site_url('patches/patches/upload') ?>"
+                                    action="<?= site_url('admin/patches') ?>"
                                     class="space-y-6 overflow-y-auto pr-2 custom-scrollbar">
+                                    <?= csrf_field() ?>
 
                                     <input type="hidden" name="patch_id" id="edit-patch-id">
                                     <input type="hidden" name="patch_version" id="patch_version">
@@ -248,7 +271,7 @@
                                 <?php if (!empty($gallery_data)) : ?>
                                     <?php foreach ($gallery_data as $img) : ?>
                                         <div class="gallery-item bg-white p-3 rounded-lg border border-gray-200 cursor-pointer hover:border-blue-500 transition shadow-sm group"
-                                            onclick="showGalleryDetail(event, <?= htmlspecialchars(json_encode($img)) ?>)">
+                                            onclick="showGalleryDetail(event, <?= esc(json_encode($img), 'attr') ?>)">
 
                                             <div class="flex gap-3">
                                                 <img src="<?= base_url($img['image_path']) ?>" class="w-16 h-16 rounded object-cover border border-gray-100" alt="">
@@ -282,7 +305,8 @@
                                         </div>
                                     </div>
 
-                                    <form action="<?= site_url('admin/gallery/upload') ?>" method="POST" enctype="multipart/form-data" id="galleryForm">
+                                    <form action="<?= site_url('admin/gallery') ?>" method="POST" enctype="multipart/form-data" id="galleryForm">
+                                        <?= csrf_field() ?>
                                         <input type="hidden" name="gallery_id" id="edit-id">
 
                                         <div class="grid grid-cols-1 gap-6">
@@ -350,14 +374,14 @@
                                         data-status="<?= esc($item['status']) ?>">
 
                                         <div class="flex justify-between text-xs text-gray-500 mb-1">
-                                            <span><?= $item['username'] ?></span>
+                                            <span><?= esc($item['username']) ?></span>
                                             <span class="<?= $item['status'] === 'reviewed' ? 'text-green-600' : 'text-gray-500' ?>">
                                                 <?= $item['status'] === 'reviewed' ? 'reviewed' : time_ago($item['created_at']) ?>
                                             </span>
                                         </div>
-                                        <p class="text-sm font-bold truncate"><?= $item['comment'] ?></p>
+                                        <p class="text-sm font-bold truncate"><?= esc($item['comment']) ?></p>
                                         <span class="text-[10px] uppercase font-black tracking-tighter <?= $item['feedback_type'] === 'bug_report' ? 'text-red-500' : 'text-amber-500' ?>">
-                                            <?= $item['feedback_type'] ?>
+                                            <?= esc($item['feedback_type']) ?>
                                         </span>
                                     </div>
 
@@ -405,16 +429,15 @@
     </div>
 
     <script>
-        window.markReviewedUrl = '<?= site_url("admin/feedback/mark_reviewed") ?>';
-        window.deleteFeedbackUrl = '<?= site_url("admin/feedback/delete_feedback") ?>';
-        window.baseUrl = "<?= base_url() ?>";
-        window.deleteGalleryUrl = "<?= site_url('admin/gallery/delete') ?>";
+        window.baseUrl = <?= json_encode(base_url()) ?>;
+        window.ADMIN = {
+            feedbackUrl: <?= json_encode(site_url('admin/feedback')) ?>,
+            galleryUrl: <?= json_encode(site_url('admin/gallery')) ?>,
+            patchesUrl: <?= json_encode(site_url('admin/patches')) ?>,
+        };
     </script>
 
-    <script>
-        const DELETE_PATCH_BASE_URL = "<?= site_url('patches/patches/delete/') ?>";
-    </script>
-
+    <script src="<?= base_url('js/admin/http.js') ?>"></script>
     <script src="<?= base_url('js/admin/feedback.js') ?>"></script>
     <script src="<?= base_url('js/admin/gallery.js') ?>"></script>
     <script src="<?= base_url('js/admin/patches.js') ?>"></script>

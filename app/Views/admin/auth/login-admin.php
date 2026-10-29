@@ -30,12 +30,12 @@
         <?php if (session()->getFlashdata('error')) : ?>
             <div class="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-4 rounded-xl mb-6 flex items-start gap-3">
                 <i class="fas fa-exclamation-circle mt-0.5"></i>
-                <span><?= session()->getFlashdata('error') ?></span>
+                <span><?= esc(session()->getFlashdata('error')) ?></span>
             </div>
         <?php endif; ?>
 
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
-            <form action="<?= site_url('admin/login/authenticate') ?>" method="POST" class="space-y-5">
+            <form action="<?= site_url('admin/login') ?>" method="POST" class="space-y-5">
                 <?= csrf_field() ?>
 
                 <div>

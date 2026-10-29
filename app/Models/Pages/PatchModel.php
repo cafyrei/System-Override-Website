@@ -12,7 +12,6 @@ class PatchModel extends Model
     protected $returnType = 'array';
 
     protected $allowedFields = [
-        'patch_id',
         'patch_path',
         'patch_title',
         'patch_description',

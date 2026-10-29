@@ -148,17 +148,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!confirm("Delete this image permanently?")) return;
 
-    fetch(`${window.deleteGalleryUrl}/${id}`, {
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setAddMode();
-          location.reload();
-        }
+    adminPost(`${window.ADMIN.galleryUrl}/${id}/delete`)
+      .then(() => {
+        setAddMode();
+        location.reload();
       })
-      .catch((err) => console.error(err));
+      .catch((err) => alert(err.message));
   };
 
   // =============================

@@ -1,0 +1,13 @@
+{
+  "name": "system-override-website",
+  "private": true,
+  "description": "Frontend build for the System Override community site (Tailwind CSS 4).",
+  "scripts": {
+    "dev": "tailwindcss -i ./public/input.css -o ./public/css/output.css --watch",
+    "build": "tailwindcss -i ./public/input.css -o ./public/css/output.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  }
+}

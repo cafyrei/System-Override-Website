@@ -126,7 +126,10 @@ _modules/*
 /phpunit*.xml
 
 # Tailwind CSS
-package-lock.json
-package.json
 node_modules/
 
+
+# Frontend tooling / test artefacts
+node_modules/
+.phpunit.cache/
+.phpunit.result.cache

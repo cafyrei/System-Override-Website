@@ -71,7 +71,9 @@ class Security extends BaseConfig
      *
      * Regenerate CSRF Token on every submission.
      */
-    public bool $regenerate = true;
+    // Kept false so the admin dashboard's fetch() calls can reuse the token
+    // rendered in the page's <meta> tag instead of chasing a rotating cookie.
+    public bool $regenerate = false;
 
     /**
      * --------------------------------------------------------------------------

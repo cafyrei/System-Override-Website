@@ -67,3 +67,13 @@
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# SYSTEM OVERRIDE: ADMIN LOGIN
+#--------------------------------------------------------------------
+# Generate the hash with:  php spark admin:hash
+# Keep the single quotes: a bcrypt hash contains "$".
+# If either value is empty, admin login is disabled.
+
+admin.username = 'change-me'
+admin.passwordHash = ''

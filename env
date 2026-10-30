@@ -77,3 +77,10 @@
 
 admin.username = 'change-me'
 admin.passwordHash = ''
+
+#--------------------------------------------------------------------
+# SYSTEM OVERRIDE: QUIZ (all optional; defaults are in app/Config/Quiz.php)
+#--------------------------------------------------------------------
+# quiz.questionsPerRound = 10
+# quiz.secondsPerQuestion = 15
+# quiz.leaderboardSize = 10

@@ -32,6 +32,7 @@
                     <a href="<?= base_url('/patches') ?>" class="nav-link">Patches</a>
                     <a href="<?= base_url('/gallery') ?>" class="nav-link">Gallery</a>
                     <a href="<?= base_url('/') ?>" class="nav-link">Home</a>
+                    <a href="<?= base_url('/quiz') ?>" class="nav-link">Quiz</a>
                     <a href="<?= base_url('/feedback') ?>" class="nav-link">Feedback</a>
                     <a href="<?= base_url('/about') ?>" class="nav-link">About</a>
                     <a href="<?= base_url('/learn') ?>" class="nav-link">Learn</a>

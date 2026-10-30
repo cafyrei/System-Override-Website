@@ -6,6 +6,7 @@ System Override is a cyberpunk-themed game community website built with CodeIgni
 
 - Public pages: Home, About, Learn, Patches, Gallery, Feedback
 - Validated feedback form (suggestion / bug report) with on-page success and error messages
+- Timed multiple-choice quiz (4 choices, 10 questions by default) with a fastest-time leaderboard
 - Admin dashboard: manage patches and gallery entries, mark feedback reviewed, delete feedback
 - Tailwind CSS 4 styling, background audio and interface animations
 
@@ -47,6 +48,12 @@ php spark migrate
 
 (The migrations use `IF NOT EXISTS`, so a database created from the old README SQL is fine.)
 
+Load the sample quiz questions (generic gaming/tech trivia; replace them with your own):
+
+```bash
+php spark db:seed QuizSeeder
+```
+
 ### Admin login
 
 There are no default credentials. Login stays disabled until you set them:
@@ -78,6 +85,8 @@ php spark serve         # http://localhost:8080
 | --- | --- | --- |
 | GET | `/`, `/about`, `/learn`, `/patches`, `/gallery`, `/feedback` | Public pages |
 | POST | `/feedback` | Submit feedback |
+| GET | `/quiz`, `/quiz/leaderboard` | Quiz page; leaderboard as JSON |
+| POST | `/quiz/start`, `/quiz/next`, `/quiz/answer` | Quiz round API (used by `public/js/main/quiz.js`) |
 | GET | `/admin-login` | Login form |
 | POST | `/admin/login`, `/admin/logout` | Sign in / out (login is rate-limited per IP) |
 | GET | `/admin` | Dashboard |
@@ -96,6 +105,23 @@ Everything under `/admin` except login/logout sits in one route group guarded by
 - **Output** from user-submitted feedback is escaped in every view.
 - Still your job in production: serve over HTTPS and set `forceGlobalSecureRequests = true`, use a least-privilege database account, and note that the admin page loads Tailwind's Play CDN script (`cdn.tailwindcss.com`) in addition to the compiled CSS, which Tailwind advises against for production.
 
+## Quiz
+
+Players enter a callsign, answer 10 four-choice questions against a per-question timer, and are ranked by **highest score, then fastest total time**.
+
+Settings live in `app/Config/Quiz.php` and can be overridden in `.env` (e.g. `quiz.questionsPerRound = 15`, `quiz.secondsPerQuestion = 20`). The round length is capped by the number of active questions in `quiz_questions`. If you change `questionsPerRound` on a live site, clear `quiz_attempts` so old and new scores aren't mixed.
+
+Questions are rows in `quiz_questions` (`question`, `choice_1`..`choice_4`, `correct_choice` = 1-4, `is_active`). There is no admin screen for them yet: edit `app/Database/Seeds/QuizSeeder.php` or insert rows directly.
+
+How it stays fair (`app/Controllers/Pages/Quiz.php`):
+
+- The correct answer is never sent with a question; it is revealed only after that question is answered.
+- The server owns the clock. The on-page timer is cosmetic, and answers faster than `minAnswerMs` are recorded as that value.
+- A wrong or late answer is charged the full time limit, so fast guessing can't beat knowing the answer.
+- Each question can be answered once (atomic update), rounds start rate-limited per IP, and callsigns are validated and escaped.
+
+Limits to know about: nothing can stop a player from looking answers up or memorising them across replays, and abandoned unfinished rounds stay in `quiz_attempts` (they never appear on the board; prune old rows if the table grows).
+
 ## Frontend
 
 ```bash
@@ -110,12 +136,12 @@ npm run build    # one-off minified build
 composer test
 ```
 
-Tests run against in-memory SQLite and cover: guests being locked out of every admin route, login (wrong, right, unconfigured), the old hardcoded credentials no longer working, admin actions, public feedback validation, upload rules and path-traversal protection, and that every public page renders.
+Tests run against in-memory SQLite and cover: guests being locked out of every admin route, login (wrong, right, unconfigured), the old hardcoded credentials no longer working, admin actions, public feedback validation, upload rules and path-traversal protection, that every public page renders, and the quiz (grading, timing and penalties, one answer per question, configurable length, leaderboard order).
 
 ## Layout
 
 ```text
-app/Controllers/Pages/    Public page controllers
+app/Controllers/Pages/    Public page controllers (incl. Quiz)
 app/Controllers/Admin/    Auth, Dashboard, Feedback, Gallery, Patches
 app/Filters/AdminAuth.php The one admin gate
 app/Libraries/            UploadStorage: the only code that writes/deletes uploads

@@ -18,6 +18,14 @@ class Admin extends BaseConfig
 
     public string $passwordHash = '';
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->username = (string) env('admin.username', '');
+        $this->passwordHash = (string) env('admin.passwordHash', '');
+    }
+
     /** Failed-or-not login attempts allowed per IP per minute. */
     public int $loginAttemptsPerMinute = 5;
 }

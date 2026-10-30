@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastScroll = window.scrollY;
     });
 
-    // Maps your clean URLs like '/patches' or '/gallery' to highlight the navigation links
+    // Maps clean URLs like '/patches' or '/gallery' to highlight the navigation links
     document.querySelectorAll(".nav-link").forEach((link) => {
         const pathName = window.location.pathname.toLowerCase();
         const linkText = link.textContent.trim().toLowerCase();

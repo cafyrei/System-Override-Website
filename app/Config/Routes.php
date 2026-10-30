@@ -18,6 +18,12 @@ $routes->get('patches', 'Pages\Patches::fetch');
 $routes->get('feedback', 'Pages\Feedback::feedback');
 $routes->post('feedback', 'Pages\Feedback::submit');
 
+$routes->get('quiz', 'Pages\Quiz::index');
+$routes->get('quiz/leaderboard', 'Pages\Quiz::leaderboard');
+$routes->post('quiz/start', 'Pages\Quiz::start');
+$routes->post('quiz/next', 'Pages\Quiz::next');
+$routes->post('quiz/answer', 'Pages\Quiz::answer');
+
 $routes->get('animations/cyber_preloader', 'Pages\AnimationController::cyber_preloader');
 
 // ---------------------------------------------------------------------

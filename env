@@ -75,5 +75,5 @@
 # Keep the single quotes: a bcrypt hash contains "$".
 # If either value is empty, admin login is disabled.
 
-admin.username = 'change-me'
-admin.passwordHash = ''
+admin.username = 'admin'
+admin.passwordHash = 'asdasds123'
